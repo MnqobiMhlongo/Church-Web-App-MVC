@@ -1,0 +1,107 @@
+﻿@model ChurchSystem.Models.Books
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    Borrow Book
+    <hr style="width:50%" />
+</center>
+
+<div class="row">
+    <div class="col">
+        <center>
+            <div class=" card">
+                <div class="card-header">Cover</div>
+                <div class="card-body">
+                    <img src="data:image/png;base64,@(Model.imageurl)" width="500" height="500" alt="Student Image">
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div class="col">
+        <center>
+            <div class=" card">
+                <div class="card-header">Details</div>
+                <div class="card-body">
+                    <b>Book Title:</b>  @Model.Title<br />
+                    <b>Genre:</b>  @Model.Genre<br />
+                    <b>Author:</b>  @Model.Author<br />
+                    <b>Date Published:</b>  @Model.published.ToString("dd MMMM yyyy")<br />
+                    <hr style="width:50%" />
+                    <strong>@Model.Status</strong>
+                    <hr style="width:50%" />
+                </div>
+            </div>
+            <br />
+            <div class=" card">
+                <div class="card-header">Description</div>
+                <div class="card-body">
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+            <br />
+            <div class="card">
+                <div class="card-header">Loan Details</div>
+                <div class="card-body">
+                    <form method="post" action="/Books/Reserve">
+                        <div class="card">
+                            <div class="card-header">Loan Details</div>
+                            <div class="card-body">
+                                <!-- Delivery Method -->
+                                <input type="radio" id="collection" name="handover" value="Collection" checked /> Collect
+                                <br /><br />
+
+                                <!-- Return Date Selection -->
+                                <u>Please Select When You Will Return The Book</u>
+                                <p>Return Date: <input type="text" id="DatePicker" name="returndateTime"></p>
+
+                                <!-- Reserve Button -->
+                                <button type="submit" class="btn btn-outline-success">Reserve</button>
+                            </div>
+                        </div>
+
+                        <!-- Hidden input for the book ID -->
+                        <input type="hidden" name="id" value="@Model.BookId" />
+                    </form>
+
+                </div>
+            </div>
+        </center>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+<script>
+    $(function () {
+        var today = new Date(); // Get today's date
+        var maxDate = new Date();
+        maxDate.setDate(today.getDate() + 10); // Set max date to 10 days from today
+
+        $("#DatePicker").datepicker({
+            minDate: today, // Allow selection starting from today
+            maxDate: maxDate// Limit selection to 10 days from today
+        });
+    });
+</script>
+
+
+@section scripts{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+
+
+}

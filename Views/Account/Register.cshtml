@@ -1,0 +1,147 @@
+﻿@model ChurchSystem.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<style>
+    .btn-large {
+        font-size: 16px; /* Adjust the font size as needed */
+    }
+</style>
+
+
+<br />
+<br />
+<br />
+<main aria-labelledby="title">
+    <center>  <h2 id="title">Create Membership</h2></center>
+    <center>
+        <img src="~/Content/themes/base/images/add-user.png" width="215" height="215" />
+    </center>
+    <center>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <br />
+
+            <div class="row">
+                @Html.LabelFor(m => m.NameSurname, "Name and Surname", new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.NameSurname, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.Age, "Age", new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.number, "Phone Number", new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.number, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.MaritalStatus, "Marital Status", new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    <select id="MaritalStatusSelect" class="form-control">
+                        <option value="Select">Select Status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                    </select>
+                    @* Hide the existing MaritalStatus textbox *@
+                    <input type="hidden" id="MaritalStatus" name="MaritalStatus" />
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    <div class="col-md-10">
+                        <select id="GenderSelect" name="GenderSelect" class="form-control">
+                            <option value="Select">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        @* Hide the existing Gender textbox *@
+                        <input type="hidden" id="Gender" name="Gender" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label-lg" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-md-2 col-md-10">
+                    <input type="submit" value="Register" class="btn" />
+                </div>
+            </div>
+
+            <br />
+
+            <br />
+        }
+    </center>
+</main>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      
+        $(document).ready(function () {
+
+            // Handle Gender select change event
+            $("#GenderSelect").change(function () {
+                var selectedValue = $(this).val();
+                // Set the hidden Gender textbox's value to the selected option
+                $("#Gender").val(selectedValue);
+                var selectedChildName = $("#Gender option:selected").text();
+                console.log(selectedValue);
+            });
+
+          
+            // Handle MaritalStatus select change event
+            $("#MaritalStatusSelect").change(function () {
+                var selectedValue = $(this).val();
+                // Set the hidden MaritalStatus textbox's value to the selected option
+                $("#MaritalStatus").val(selectedValue);
+                var selectedChildName = $("#Gender option:selected").text();
+                console.log(selectedValue);
+            });
+        });
+    </script>
+
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

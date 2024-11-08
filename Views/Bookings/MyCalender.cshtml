@@ -1,0 +1,55 @@
+﻿@model List<ChurchSystem.Models.Booking>
+
+@{
+    ViewBag.Title = "MyCalendar";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<center>
+    <h2>
+        Consultation: My Calendar
+    </h2>
+</center>
+<br />
+<center>
+    <div id="calendar"></div>
+</center>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+
+@section scripts{
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var eventsData = @Html.Raw(ViewBag.EventsData);
+            var calendarEl = document.getElementById('calendar');
+            calendarEl.style.width = '1200px'; // Set the desired width
+            calendarEl.style.height = '600px';
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: eventsData.map(event => ({
+                    title: event.title,
+                    start: event.start,
+                    purpose: event.purpose,
+                    url: '/Bookings/Details/' + event.BookingId // Adjust the URL format as needed
+                }))
+            });
+            calendar.render();
+        });
+
+    </script>
+}
+
+
+
+<br />
+<br />
+<br />
+
+<br />
+<br />
+<br />
+
+<br />
+<br />
+<br />

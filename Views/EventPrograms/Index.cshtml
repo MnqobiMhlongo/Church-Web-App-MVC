@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ChurchSystem.Models.EventProgram>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Events.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.activity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.finished)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Events.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.activity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finished)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.programId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.programId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.programId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+

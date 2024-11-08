@@ -1,0 +1,161 @@
+﻿@model IEnumerable<ChurchSystem.Models.BookLoan>
+
+@{
+    ViewBag.Title = "BooksReserved";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<center>
+    <img src="~/Content/img/books.gif" width="200" height="200" />
+    <h2>Books Borrowed</h2>
+    <hr style="width:50%" />
+</center>
+<br />
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgray">
+                Date: [ @item.reservedate.ToString("d MMMM yyyy") ] <br />
+                <hr />
+                <div class="row">
+                    <img src="data:image/png;base64,@(item.Books.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@item.Books.Title</h4>
+
+                    <div class="button" style="padding-inline-start:600px">
+                        <a class="btn btn-outline-info" href="@Url.Action("ReservationDetails", new {id = item.bookloanId})">Details</a>
+                        @if(item.status == "Book Collected")
+                        {
+                            <a class="btn btn-outline-warning extend-loan" data-id="@item.bookloanId" data-toggle="modal" data-target="#extendLoanModal">Extend Loan Period</a>
+                        }                     
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <strong>@item.status</strong>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+
+<!-- Modal for extending loan period -->
+<div class="modal fade" id="extendLoanModal" tabindex="-1" role="dialog" aria-labelledby="extendLoanModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="extendLoanModalLabel">Extend Loan Period</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="extendLoanForm">
+                    <input type="hidden" id="bookLoanId" name="bookLoanId" />
+                    <div class="form-group">
+                        <label for="newReturnDate">New Return Date:</label>
+                        <input type="date" class="form-control" id="newReturnDate" name="newDate" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+<!-- Toastr JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+<script>
+    // Define the showSuccessMessage function
+    function showSuccessMessage(message) {
+        toastr.success(message);
+    }
+
+    function showErrorMessage(message) {
+        toastr.error(message);
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-full-width",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    }
+
+    // Handle the Toastr notification.
+    $(document).ready(function () {
+        // Check if a success message exists in the query string (added after redirection).
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("errorMessage")) {
+            var errorMessage = urlParams.get("errorMessage");
+            showErrorMessage(errorMessage);
+        }
+        if (urlParams.has("successMessage")) {
+            var successMessage = urlParams.get("successMessage");
+            showSuccessMessage(successMessage);
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Populate the modal with the correct bookLoanId when the button is clicked
+            $('.extend-loan').on('click', function () {
+                var bookLoanId = $(this).data('id');
+                $('#bookLoanId').val(bookLoanId);
+            });
+
+            // Handle the form submission with AJAX
+            $('#extendLoanForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                var formData = $(this).serialize(); // Serialize the form data
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("extendrequest", "Books")', // Update with your controller name
+                    data: formData,
+                    success: function (response) {
+                        if (response.redirectUrl) {
+                            window.location.href = response.redirectUrl;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        alert("An error occurred: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+}

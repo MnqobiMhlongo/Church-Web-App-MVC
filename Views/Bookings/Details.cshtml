@@ -1,0 +1,63 @@
+﻿@model ChurchSystem.Models.Booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+
+<div>
+    <center>
+        <h4>Booking</h4>
+        <hr />
+        <dl class="dl-horizontal">
+         
+
+            <dd>
+                @Html.DisplayFor(model => model.ChurchLeaders.LeaderName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.user)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.user)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BookingDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Purpose)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Purpose)
+            </dd>
+
+        </dl>
+
+</div>
+</center>
+
+<div class="button">
+    <a class="btn" href="@Url.Action("AdminHRC","Home")">Back</a>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+

@@ -1,0 +1,105 @@
+﻿@model ChurchSystem.Models.Course
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<center>
+    <br />
+    <br />
+    <img src="~/Content/img/homework.png" width="230" height="230" />
+    <h2>Create New Course</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr style="width:50%" />
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseName, "Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseDescription, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CourseDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CourseDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.estDuration, "Estimated Duration (in Hours)", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.estDuration, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.estDuration, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Level, "Level", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.DropDownListFor(m => m.Level, new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Children’s Ministry/Sunday School", Value = "Children’s Ministry/Sunday School" },
+                        new SelectListItem { Text = "Youth Ministry", Value = "Youth Ministry" },
+                        new SelectListItem { Text = "Young Adults", Value = "Young Adults" },
+                        new SelectListItem { Text = "Adults", Value = "Adults" }
+
+                    }, "Value", "Text"),
+                    new { @class = "form-control" })
+
+                    <input type="hidden" id="Level" name="Level" />
+
+                    @Html.ValidationMessageFor(model => model.Level, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Next" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</center>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            console.log("Page loaded");
+
+            // Handle the LS select change event
+            $("#LS").change(function () {
+                var selectedValue = $(this).val();
+                // Set the hidden Level textbox's value to the selected option
+                $("#Level").val(selectedValue);
+                console.log("Selected Level: " + selectedValue); // This will log the correct selected value
+            });
+        });
+
+    </script>
+}
+
+
+<br />
+<br />
+<br />
+<br />

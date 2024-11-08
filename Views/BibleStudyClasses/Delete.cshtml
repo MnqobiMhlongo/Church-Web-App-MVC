@@ -1,0 +1,65 @@
+﻿@model ChurchSystem.Models.BibleStudyClasses
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BibleStudyClasses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.classdecription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.classdecription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.venueId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.venueId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.churchLeader)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.churchLeader)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

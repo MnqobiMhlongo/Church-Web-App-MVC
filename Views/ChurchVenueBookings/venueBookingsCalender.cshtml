@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "venueBookingsCalender";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <h2>Venue Bookings Calender</h2>
+    <hr style="width:50%" />
+</center>
+
+
+<div class="calendar-container">
+    <center>
+        <div id="calendar" style="width:300px"></div>
+    </center>
+</div>
+
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>
+
+@section scripts {
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var eventsData = @Html.Raw(ViewBag.EventsData);
+            var calendarEl = document.getElementById('calendar');
+            calendarEl.style.width = '1000px'; // Set the desired width
+            calendarEl.style.height = '900px';
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: eventsData.map(event => ({
+                    title: event.title,
+                    start: event.start,
+                    location: event.location,
+                    url: '/ChurchVenueBookings/admindetails/' + event.EventId // Adjust the URL format as needed
+                }))
+            });
+            calendar.render();
+
+        });
+    </script>
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}
+<br />
+

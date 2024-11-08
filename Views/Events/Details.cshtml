@@ -1,0 +1,76 @@
+﻿@model ChurchSystem.Models.Events
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+<center>
+
+    <img src="~/Content/themes/base/images/church-svgrepo-com.svg" width="215" height="215" />
+    <div>
+        <h4>Event</h4>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-cross"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.dateTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.dateTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Organizer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Organizer)
+            </dd>
+
+        </dl>
+    </div>
+
+</center>
+
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>

@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "quizIndex";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+    var qzs = ViewBag.qz as List<ChurchSystem.Models.Quiz>;
+
+}
+
+<h2>Quizzes</h2>
+
+
+
+@if (qzs == null)
+{
+
+}
+else
+{
+
+    foreach (var q in qzs)
+    {
+
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightblue">
+                    Date: [ @q.CreatedAt.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="~/Content/img/quiz.png" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@q.Title</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="@Url.Action("ViewResults","Quizzes", new { id = q.CourseId})">View Attempts</a>
+                            <a class=" btn btn-outline-danger" href="@Url.Action("QDeleteConfirmed", new {id = q.QuizID})">Remove</a><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <br />
+    <br />
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:lightblue">
+                <div class="row">
+                    <img src="~/Content/img/quiz.png" width="50" height="50" />
+
+                    <div class="button" style="padding-inline-start:10px; padding-top:10px">
+                        <a class="btn btn-outline-info" href="@Url.Action("Create","Quizzes", new {CourseId  = ViewBag.ID})">Create New Quiz</a>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+}
+
+<br />
+<br />
+<a class=" btn btn-outline-primary" href="@Url.Action("AdmminIndex","Courses")">Back To Bible Studies</a>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+} 

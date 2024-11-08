@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "AwaitingCollection";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+@model IEnumerable<ChurchSystem.Models.BookLoan>
+
+<center>
+    <img src="~/Content/img/books.gif" width="200" height="200" />
+    <h2>All Borrowed Books</h2>
+    <hr style="width:50%" />
+</center>
+<br />
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgray">
+                Date: [ @item.reservedate.ToString("d MMMM yyyy") ] <br />
+                <hr />
+                <div class="row">
+                    <img src="data:image/png;base64,@(item.Books.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@item.Books.Title</h4>
+
+                    <div class="button" style="padding-inline-start:600px">
+                        <a class="btn btn-outline-info" href="@Url.Action("AdminLoanDetails", new {id = item.bookloanId})">Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <strong> To: @item.username</strong><br/>
+                <strong>Expected Return:</strong> @item.expectedReturn.ToString("d MMMM yyyy")
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+
+
+}

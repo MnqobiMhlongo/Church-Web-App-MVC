@@ -1,0 +1,43 @@
+﻿@model ChurchSystem.Models.EventProgram
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EventProgram</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Events.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Events.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.activity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.activity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.finished)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finished)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.programId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

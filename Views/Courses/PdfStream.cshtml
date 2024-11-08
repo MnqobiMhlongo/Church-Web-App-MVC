@@ -1,0 +1,65 @@
+﻿@model ChurchSystem.Models.CourseMaterial
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PdfStream</title>
+</head>
+<body>
+    <div>
+        <center>
+            <iframe src="@Model.FileUrl" width="65%" height="600px" frameborder="0"></iframe>
+        </center>
+    </div>
+</body>
+</html>
+
+
+
+@section scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.js"></script>
+
+    <script>
+    // URL of the PDF file
+    var pdfUrl = "@Model.FileUrl";
+
+    // Fetch the PDF document
+    fetch(pdfUrl).then(function(response) {
+        return response.arrayBuffer();
+    }).then(function(buffer) {
+        // Render PDF
+        pdfjsLib.getDocument(buffer).promise.then(function(pdf) {
+            // Render the first page of the PDF
+            pdf.getPage(1).then(function(page) {
+                var scale = 1.5;
+                var viewport = page.getViewport({ scale: scale });
+
+                // Prepare canvas using PDF page dimensions
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                // Render PDF page into canvas context
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                page.render(renderContext);
+
+                // Append canvas to container
+                var container = document.getElementById('pdf-container');
+                container.appendChild(canvas);
+            });
+        });
+    });
+    </script>
+
+}

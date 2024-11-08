@@ -1,0 +1,281 @@
+﻿@model ChurchSystem.Models.VenueBookingEvent
+@using ZXing
+@using ZXing.QrCode
+@using ZXing.Common
+@using System.Drawing.Imaging
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+<style>
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%; /* Adjust the width of the controls */
+    }
+
+    .carousel-control-prev {
+        left: 10%; /* Adjust the distance from the left edge */
+    }
+
+    .carousel-control-next {
+        right: 10%; /* Adjust the distance from the right edge */
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(74, 174, 255, 1); /* Add a background color for visibility */
+        padding: 30px; /* Add padding for better visibility */
+        border-radius: 100%; /* Make the controls circular */
+        background-size: 50%; /* Adjust the size of the icons */
+    }
+</style>
+<center>
+    <h2>Confirmation</h2>
+</center>
+<br />
+<br />
+<br />
+<!-----
+<div>
+    <h4>Venue Booking Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenue.VenueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenueBooking.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenueBooking.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.startTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.startTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Attendees)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attendees)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.moreSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.moreSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostCleanup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostCleanup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.equipment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.equipment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.layoutid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.layoutid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddOns)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddOns)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+    </dl>
+</div>
+    ---->
+<center>
+
+    <div>
+        <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                @if (ViewBag.Images != null && ViewBag.Images.Count > 0)
+                {
+                    int index = 0;
+                    foreach (var image in ViewBag.Images)
+                    {
+                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                            <img src="data:image/png;base64,@image" class="d-block w-70" alt="Venue Image">
+                        </div>
+                        index++;
+                    }
+                }
+            </div>
+
+            <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+
+
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                Details
+                <hr />
+                <p><strong>@Html.DisplayNameFor(model => model.ChurchVenue.VenueName):</strong> @ViewBag.VN</p>
+                <p><strong>@Html.DisplayNameFor(model => model.EventDescription):</strong> @Html.DisplayFor(model => model.EventDescription)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.startTime):</strong> @Model.startTime</p>
+                <p><strong>@Html.DisplayNameFor(model => model.endTime):</strong> @Model.endTime</p>
+                <p><strong>Estimated Attendees:</strong> @Html.DisplayFor(model => model.Attendees)</p>
+                <hr />
+                <p><strong> Booking:</strong> R250 </p>
+                <p><strong>@Html.DisplayNameFor(model => model.AddOns):</strong> @Html.DisplayFor(model => model.AddOns)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.TotalCost):</strong> @Html.DisplayFor(model => model.TotalCost)</p>
+
+            </div>
+            <div class="col-md-6">
+                Add-Ons
+                <hr />
+                <p><strong>@Html.DisplayNameFor(model => model.tent):</strong> @Html.DisplayFor(model => model.tent)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.moreSeats):</strong> @Html.DisplayFor(model => model.moreSeats)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.PostCleanup):</strong> @Html.DisplayFor(model => model.PostCleanup)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.equipment):</strong> @Html.DisplayFor(model => model.equipment)</p>
+                <p><strong>Seating Layout:</strong> @Html.DisplayFor(model => model.layoutid)</p>
+                <hr />
+                @if (ViewBag.Paid)
+                {
+                    //Toots&TheMaytals54-46WasMyNumber
+                    {
+                        var writer = new BarcodeWriter
+                        {
+                            Format = BarcodeFormat.QR_CODE,
+                            Options = new QrCodeEncodingOptions
+                            {
+                                Height = 100,
+                                Width = 100,
+                                Margin = 0
+                            }
+                        };
+
+                        var qrCode = writer.Write($"{ViewBag.Verification}");
+
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            qrCode.Save(memoryStream, ImageFormat.Png);
+                            var qrCodeBase64 = Convert.ToBase64String(memoryStream.ToArray());
+
+                            <img src="data:image/png;base64,@qrCodeBase64" alt="QR code"><br />
+
+                            <br />
+                            <br />
+                            <p> use qrcode to verify </p>
+                            <a href="data:image/png;base64,@qrCodeBase64" download="qr-code.png" class="btn btn-primary">Download QR Code</a>
+                        }
+                    }
+
+
+                }
+                else
+                {
+
+                }
+            </div>
+        </div>
+    </div>
+</center>
+
+
+
+
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

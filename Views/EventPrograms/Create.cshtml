@@ -1,0 +1,76 @@
+﻿@model ChurchSystem.Models.EventProgram
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Event Program</h2>
+
+@using (Html.BeginForm("Create", "EventPrograms", FormMethod.Post, new { id = "eventProgramForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add Activities</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display: none;">
+            @Html.LabelFor(model => model.EventId, "EventId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EventId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div id="activities-container">
+                <div class="activity-container">
+                    @Html.LabelFor(model => model.activity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.activity, new { htmlAttributes = new { @class = "form-control activity-input" }})
+                        @Html.ValidationMessageFor(model => model.activity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" id="add-activity" class="btn btn-default">Add Activity</button>
+                <input type="submit" value="Complete and Send Invites" class="btn btn-default" />
+            </div>
+        </div>
+
+        @Html.Hidden("Activities", null, new { id = "activities-list" })
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#add-activity').click(function () {
+                var $activitiesContainer = $('#activities-container');
+                var $newActivity = $('.activity-container').first().clone();
+                $newActivity.find('input[type="text"]').val('');
+                $activitiesContainer.append($newActivity);
+            });
+
+
+            //KanyeWestAfterYou
+            $('#eventProgramForm').submit(function () {
+                var activities = [];
+                $('.activity-input').each(function () {
+                    activities.push($(this).val());
+                });
+                $('#activities-list').val(JSON.stringify(activities));
+            });
+        });
+    </script>
+
+}

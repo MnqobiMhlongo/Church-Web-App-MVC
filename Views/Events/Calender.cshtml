@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+
+<style>
+    .calendar-container {
+        display: flex;
+    }
+
+    #calendar {
+        flex: 1;
+        /* Add additional styling for the calendar as needed */
+    }
+
+    ul.event-list {
+        width: 200px;
+        /* Add additional styling for the event list as needed */
+    }
+
+    .event-list-container {
+        width: 200px;
+        margin-left: 50px;
+        /* Add additional styling for the event list container as needed */
+    }
+
+        .event-list-container h2 {
+            font-size: 20px; /* Adjust the font size */
+            margin-bottom: 10px; /* Add spacing below the heading */
+        }
+</style>
+
+
+<br />
+<br />
+<br />
+
+<h2>Calendar:</h2>
+
+<div class="calendar-container">
+    <div id="calendar"></div>
+    <div class="event-list-container">
+        <h2>Event List</h2> <!-- Add your heading here -->
+        <ul class="event-list" id="eventList">
+            <!-- Events will be dynamically added here -->
+        </ul>
+    </div>
+</div>
+
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>
+@section scripts {
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var eventsData = @Html.Raw(ViewBag.EventsData);
+            var calendarEl = document.getElementById('calendar');
+            calendarEl.style.width = '900px'; // Set the desired width
+            calendarEl.style.height = '900px';
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: eventsData.map(event => ({
+                    title: event.title,
+                    start: event.start,
+                    location: event.location,
+                    url: '/Events/Details/' + event.EventId // Adjust the URL format as needed
+                }))
+            });
+            calendar.render();
+        });
+    </script>
+}
+<br />
+
+<center>
+    <div class="button">
+        <a class="btn" href="@Url.Action("HRC","Home")">Home</a>
+    </div>
+</center>
+
+<br />
+<br />
+<br />
+<br />
+<br />

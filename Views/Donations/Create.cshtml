@@ -1,0 +1,117 @@
+﻿@model ChurchSystem.Models.Donations
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<center>
+    <img src="~/Content/themes/base/images/charity-donation-svgrepo-com (1).svg" width="215" height="215" />
+    <h2>Donations</h2>
+</center>
+@using (Html.BeginForm("Create", "Donations", FormMethod.Post, new { id = "MainDonationForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <center>
+            <h4>Your Donations Would Be Very Much Appreciated</h4>
+            <hr />
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DonationAmount, "Please Enter Amount You Would Like To Donate", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DonationAmount, new { htmlAttributes = new { @class = "form-control", id = "DonationAmount" } })
+                    @Html.ValidationMessageFor(model => model.DonationAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FundId, "Please select fund to Donate to", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("FundId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FundId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!----<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Donate" class="btn btn-success" />
+                </div>
+            </div>-->
+            <br />
+        </center>
+    </div>
+}
+
+<center>
+    <div class="col-lg-2 col-12">
+        <form id="PayFastForm" action="https://www.payfast.co.za/eng/process" method="POST">
+            <input type="hidden" name="merchant_id" value="24377765">
+            <input type="hidden" name="merchant_key" value="gsefp06ta504u">
+            <input type="hidden" name="return_url" value="https://localhost:44386/Home/Index">
+            <input type="hidden" name="cancel_url" value="https://localhost:44386/Home/About">
+            <input type="hidden" name="notify_url" value="https://localhost:44386/Home/Contact">
+
+            <input type="hidden" name="name_first" value="FirstName">
+            <input type="hidden" name="name_last" value="LastName">
+            <input type="hidden" name="email_address" value="@User.Identity.Name">
+            <input type="hidden" name="cell_number" value="0634032279">
+
+            <input type="hidden" name="amount" value="">
+            <input type="hidden" name="item_name" value="Ice">
+            <input type="hidden" name="item_description" value="Bear">
+
+            <input type="hidden" name="email_confirmation" value="1">
+            <input type="hidden" name="confirmation_address" value="22112343@dut4life.ac.za">
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">PayFast</button>
+            </div>
+        </form>
+    </div>
+</center>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="button">
+    <a class="btn" href="@Url.Action("HRC", "Home")">Back</a>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Function to update the amount field when PayFast button is clicked
+            $('#PayFastForm').submit(function (event) {
+                // Prevent default form submission
+                event.preventDefault();
+
+                // Retrieve the value entered in the DonationAmount field
+                var donationAmount = parseFloat($('#DonationAmount').val());
+
+                // Set the value of the amount input field to the donationAmount
+                $('input[name="amount"]').val(donationAmount);
+
+                // Submit the main form
+                $('#MainDonationForm').submit();
+
+                // After submitting the main form, submit the PayFast form
+                this.submit();
+            });
+        });
+    </script>
+}
+
+
+

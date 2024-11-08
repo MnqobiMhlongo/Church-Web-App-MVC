@@ -1,0 +1,53 @@
+﻿@model ChurchSystem.Models.ChurchLeaders
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChurchLeaders</h4>
+    <hr />
+    <div style="text-align: center;">
+
+        <img src="@Model.ImageUrl" alt="Vehicle Image" />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.LeaderName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LeaderName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Role)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Role)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+
+        </dl>
+    </div>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.leaderId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

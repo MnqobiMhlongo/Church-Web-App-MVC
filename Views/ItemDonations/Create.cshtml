@@ -1,0 +1,98 @@
+﻿@model ChurchSystem.Models.ItemDonations
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<br />
+<br />
+<br />
+
+
+<center>
+    <img src="~/Content/themes/base/images/charity-donation-svgrepo-com.svg" width="215" height="215" />
+    <br/>
+</center>
+@using (Html.BeginForm("Create", "ItemDonations", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+<center>
+    <div class="form-horizontal">
+        <br />
+        <h4>Donated Item/s</h4>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-cross"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.itemDescription, "Item Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.itemDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.itemDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!---- <div class="form-group">
+            <button type="button" id="captureImageBtn" class="btn btn-primary">Capture Image</button>
+            <!--- <input type="file" name="ImageFile" id="ImageFile" class="form-control-file d-none">-->
+
+        </div>
+        
+
+        <div class="form-group">
+            <input type="file" name="ImageFile" id="ImageFile" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add To Market Place" class="btn btn-outline-success" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <br />
+    <br />
+    <br />
+</center>
+   
+}
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>
+
+
+@section scripts{
+    
+    
+    
+    
+    
+
+}

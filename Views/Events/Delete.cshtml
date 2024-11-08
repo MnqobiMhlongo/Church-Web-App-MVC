@@ -1,0 +1,79 @@
+﻿@model ChurchSystem.Models.Events
+
+@{
+    ViewBag.Title = "Cancel Event";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<center>
+    <h2>Cancel Event</h2>
+
+    <h3>Are you sure you want to cancel this event?</h3>
+    <div>
+        
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.dateTime)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.dateTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Organizer)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Organizer)
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm("Cancel", "Events", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Cancel Event" class="btn btn-danger" /> |
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
+</center>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+@section scripts{
+    <!-- Add any additional scripts if needed -->
+}

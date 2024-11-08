@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewBag.Title = "EventRegister";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Attendance Register</h2>
+
+<br />
+<br />
+
+<style>
+    .result {
+        background-color: green;
+        color: #fff;
+        padding: 20px;
+    }
+
+    .row {
+        display: flex;
+    }
+</style>
+
+
+<script src="~/Scripts/qrCodeScan.js"></script>
+
+
+<div class="row">
+    <div class="col">
+        <div style="width:500px;" id="reader"></div>
+    </div>
+    <div class="col" style="padding:30px;">
+        <h4>SCAN RESULT</h4>
+        <br />
+        <bt />
+        <div id="result">Result Here</div>
+    </div>
+</div>
+<br />
+<br />
+
+
+
+<script type="text/javascript">
+    function onScanSuccess(qrCodeMessage) {
+        document.getElementById('result').innerHTML = '<span class="result">' + qrCodeMessage + '</span>';
+
+
+         //TotoAfrica
+          $.ajax({
+              type: "POST",
+              url: "@Url.Action("Arrived", "Events")",
+              data: { verification: qrCodeMessage },
+              success: function (response) {
+                  location.reload();
+                  alert("Register Updated");
+
+              },
+              error: function (xhr, status, error) {
+                  // Optionally, handle error
+              }
+          });
+
+
+
+    }
+    function onScanError(errorMessage) {
+        //handle scan error
+    }
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+</script>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Attendee</th>
+            <th>Present</th>
+            <th> @ViewBag.CountTrue : @ViewBag.Count </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Register != null && ViewBag.Register.Count > 0)
+        {
+            int count = 1;
+            foreach (var attendee in ViewBag.Register)
+            {
+                <tr>
+                    <td><img src="~/Content/img/user-check.png" width="25" height="25 " /></td>
+                    <td>@attendee.Attandee</td>
+                    @*<td>@attendee.attended</td>*@
+
+                    @if (@attendee.attended == true)
+                    {
+                        <td><img src="~/Content/img/accept.png" width="25" height="25 " /></td>
+                    }
+                    else
+                    {
+                        <td><img src="~/Content/img/cross.png" width="25" height="25 " /></td>
+                    }
+
+                    <td></td>
+                </tr>
+                count++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">No Invites Accepted Yet</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+@section scripts{
+
+}
+
+
+
+<br />
+<br />
+<br />
+<br />
+<div class="col-lg-2 col-12">
+    <div class="get-quote">
+        <a href="@Url.Action("AdminHRC", "Home")" class="btn btn-primary">Submit Attendance</a>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+

@@ -1,0 +1,59 @@
+﻿@model ChurchSystem.Models.Order
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Order Summary</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.Price * item.Quantity).ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h4>Total Amount: @Model.TotalAmount.ToString("C")</h4>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Shipping Information</h3>
+        @using (Html.BeginForm("SubmitOrder", "Cart", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="FullName">Full Name:</label>
+                <input type="text" id="FullName" name="FullName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="Address">Shipping Address:</label>
+                <textarea id="Address" name="Address" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="PaymentMethod">Payment Method:</label>
+                <select id="PaymentMethod" name="PaymentMethod" class="form-control" required>
+                    <option value="CreditCard">Credit Card</option>
+                    <option value="PayPal">PayPal</option>
+                    <!-- Add other payment options as needed -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        }
+    </div>
+</div>

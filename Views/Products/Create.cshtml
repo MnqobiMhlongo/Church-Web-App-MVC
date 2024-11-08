@@ -1,0 +1,124 @@
+﻿@model ChurchSystem.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/ChurchLayout.cshtml";
+}
+
+<style>
+    .vehicle-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+        .vehicle-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .vehicle-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .vehicle-form input[type="text"],
+        .vehicle-form input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .vehicle-form .validation-error {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .vehicle-form .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .vehicle-form .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+
+            .vehicle-form .btn-primary:hover,
+            .vehicle-form .btn-primary:focus,
+            .vehicle-form .btn-primary:active,
+            .vehicle-form .btn-primary.active,
+            .open .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #286090;
+                border-color: #204d74;
+            }
+
+            .vehicle-form .btn-primary:active,
+            .vehicle-form .btn-primary.active,
+            .open .dropdown-toggle.btn-primary {
+                background-image: none;
+            }
+</style>
+
+
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data", @class = "vehicle-form" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Product</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.productDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.productDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.productDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProductPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="file" name="ImageFile" id="ImageFile" />
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

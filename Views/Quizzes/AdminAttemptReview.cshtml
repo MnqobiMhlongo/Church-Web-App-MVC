@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+
+
+@{
+    var list = ViewBag.QA as List<ChurchSystem.Models.QuizAttempt>;
+    var countCorrect = list.Where(a => a.IsCorrect).Count();
+    var countTotal = list.Count();
+    var percentageScore = (countCorrect / (double)countTotal) * 100;
+    var passed = percentageScore >= 50; // Assuming 50% is the passing score
+}
+
+
+<center>
+    <h2>Quiz Attempt Review</h2>
+    <hr style="width:50%" />
+</center>
+
+<div class="card" style="width: 50%; margin: 0 auto; padding: 20px;">
+    <div class="card-body text-center">
+        <h4 class="card-title">Quiz Score</h4>
+        <div class="progress mb-3" style="height: 30px;">
+            <div class="progress-bar" role="progressbar" style="width: @percentageScore%;"
+                 aria-valuenow="@percentageScore" aria-valuemin="0" aria-valuemax="100">
+                @percentageScore.ToString("0.00")%
+            </div>
+        </div>
+        <p class="card-text">@ViewBag.user got @countCorrect out of @countTotal correct</p>
+        <h5 class="card-text text-@((passed) ? "success" : "danger")">
+            @if (passed)
+            {
+                <span>Quiz Passed</span>
+            }
+            else
+            {
+                <span>Quiz Failed</span>
+            }
+        </h5>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+
+@foreach (var item in list)
+{
+    <div>
+        @if (item.IsCorrect)
+        {
+            <center>
+                <div class="col-md-10">
+                    <div class="card" style="background-color:lawngreen">
+                        <div class="card-header">
+                            Question : @item.Question.Text <br />
+                            Your Answer: @item.SubmittedAnswer
+                            <hr />
+                            Correct
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+            </center>
+        }
+
+        else
+        {
+            <div class="col-md-10">
+                <div class="card" style="background-color:red">
+                    <div class="card-header">
+                        Question : @item.Question.Text<br />
+                        Your Answer: @item.SubmittedAnswer
+                        <hr />
+                        Incorrect
+                        Correct Answer: @item.CorrectAnswer
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+        }
+    </div>
+
+}
+
+<center>
+    <a class="btn btn-outline-success" href="@Url.Action("ViewResults","Quizzes", new {id = ViewBag.CID})">
+        Done
+    </a>
+</center>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />  
+<br />
+<br />
+<br />
+<br />
+
+@section scripts{
+
+
+
+}

@@ -1,0 +1,81 @@
+﻿@model ChurchSystem.Models.VenueChecklist
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>VenueChecklist</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenue.VenueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cleaned)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cleaned)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoundEquipemnt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoundEquipemnt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Chairs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Chairs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lights)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lights)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tents)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SafetyEquipment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SafetyEquipment)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

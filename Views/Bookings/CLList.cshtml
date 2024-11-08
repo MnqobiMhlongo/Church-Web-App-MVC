@@ -1,0 +1,132 @@
+﻿@model IEnumerable<ChurchSystem.Models.ChurchLeaders>
+
+@{
+    ViewBag.Title = "CLList";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<br />
+
+<h2>Church Leaders</h2>
+
+<br />
+<br />
+<br />
+<style>
+    .card {
+        height: 100%;
+        margin-bottom: 15px; /* Add margin to create space between cards */
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .add-card {
+        border: 2px dashed #ccc; /* Example styling for the "Add Vehicle" card */
+        text-align: center;
+        padding: 20px;
+    }
+
+    .background-image {
+        margin: 0;
+        padding: 0;
+        background-image: url('@ViewBag.BackgroundImageUrl');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+<!----
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LeaderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.leaderId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.leaderId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.leaderId })
+            </td>
+        </tr>
+    }
+
+</table>-->
+
+
+
+<center>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="@Url.Action("Create", new { leaderId = item.leaderId })">
+                        <img src="data:image/png;base64,@(item.ImageUrl)" alt="Church Leader Image" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.LeaderName</h5>
+                            <p class="card-text">
+                                <strong>Role:</strong> @item.Role<br />
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</center>
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+
+@section scripts{
+    
+    
+    
+}

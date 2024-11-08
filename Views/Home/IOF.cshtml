@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "IOF";
+    Layout = "~/Views/Shared/ChurchLayout.cshtml";
+}
+
+<br />
+
+<br />
+<br />
+<br/>
+<center>
+    <h2>Donate Items Or Funds</h2>
+</center>
+
+<div class="divider-custom">
+    <div class="divider-custom-line"></div>
+    <div class="divider-custom-icon"><i class="fas fa-cross"></i></div>
+    <div class="divider-custom-line"></div>
+</div>
+
+
+<section class="page-section portfolio" id="portfolio">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Portfolio Item 1-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <a href="@Url.Action("Create", "ItemDonations")">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><h4>Donate Items</h4></div>
+                        </div>
+                        <img class="img-fluid" src="~/Content/themes/base/images/charity-svgrepo-com (1).svg" alt="..." />
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-5">
+                <a href="@Url.Action("Create", "Donations")">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><h4>Donate Funds</h4></div>
+                        </div>
+                        <img class="img-fluid" src="~/Content/themes/base/images/charity-svgrepo-com (2).svg" alt="..." />
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>

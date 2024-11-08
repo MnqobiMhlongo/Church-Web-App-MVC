@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        /* Add this inline CSS block */
+        .navbar-brand-icon {
+            background-image: url('/Content/themes/base/images/cross.png');
+            background-repeat: no-repeat;
+            background-size: 45px 45px;
+            padding-left: 50px;
+            padding-right:30px;
+            display: inline-block;
+            vertical-align: middle;
+
+            
+        }
+
+        .navbar a {
+            font-size: 21px; /* Adjust the font size to your preference */
+        }
+
+        .navbar {
+            height: 70px; /* Adjust the height to your preference */
+            /* Additional CSS styles for your navbar */
+        }
+    </style>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GRACE OF GOD CHURCH</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary" >
+        <div class="container">
+            @Html.ActionLink("GRACE OF GOD CHURCH", "Index", "Home", new { area = "" }, new { @class = "navbar-brand navbar-brand-icon" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+                 @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - GRACE OF GOD CHURCH</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

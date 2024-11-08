@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ChurchSystem.Models.Books>
+
+@{
+    ViewBag.Title = "WishList";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <h2>My Wish List</h2>
+    <hr style="width:50%" />
+    <br />
+</center>
+
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgray">
+                <div class="row">
+                    <img src="data:image/png;base64,@(item.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px"> @item.Title</h4>
+
+                    <div class="button" style="padding-inline-start:600px">
+                        <a class="btn btn-danger" href="@Url.Action("Remove","Books", new {id = item.BookId})">Remove</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <strong> Status: @item.Status</strong><br />
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+<br />
+
+<!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+<!-- Toastr JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script>
+    // Define the showSuccessMessage function
+    function showSuccessMessage(message) {
+        toastr.success(message);
+    }
+
+    // Handle the Toastr notification.
+    $(document).ready(function () {
+        // Check if a success message exists in the query string (added after redirection).
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("successMessage")) {
+            var successMessage = urlParams.get("successMessage");
+            showSuccessMessage(successMessage);
+        }
+    });
+</script>
+
+@section scripts{}

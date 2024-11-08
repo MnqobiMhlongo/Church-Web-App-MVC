@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Event Program View";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .progress-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 800px;
+        background-color: #f9f9f9;
+        margin: 20px auto;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        width: 25%;
+    }
+
+    .step-number {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #ccc;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .step-text {
+        margin-top: 10px;
+        font-size: 14px;
+        text-align: center;
+        color: #333;
+    }
+
+    .step.completed .step-number {
+        background-color: #4CAF50;
+    }
+
+    .step.current .step-number {
+        background-color: #ffffff;
+        color: #333;
+        border: 2px solid #4CAF50;
+    }
+
+    .step::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: calc(-50% + 20px);
+        width: calc(100% - 40px);
+        height: 4px;
+        background-color: #ccc;
+    }
+
+    .step:first-child::before {
+        display: none;
+    }
+
+    .step.completed::before {
+        background-color: #4CAF50;
+    }
+
+    .step.current::before {
+        background-color: #4CAF50;
+    }
+
+    .activity-list {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .activity-item {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+    .activity-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .activity-status {
+        margin-top: 5px;
+    }
+
+        .activity-status input[type="checkbox"] {
+            margin-right: 5px;
+        }
+</style>
+
+<h2 style="text-align: center; margin-top: 20px;">Event Program View</h2>
+
+@{
+    var program = ViewBag.program as IEnumerable<dynamic>;
+}
+
+@if (program != null)
+{
+    <center>
+        <div class="progress-bar">
+            @{
+                int stepNumber = 1;
+                foreach (var item in program)
+                {
+                    <div class="step @(item.finished ? "completed" : "") @(item == ViewBag.currentActivity ? "current" : "")">
+                        <div class="step-number">@stepNumber</div>
+                        <div class="step-text">@item.activity</div>
+                    </div>
+                    stepNumber++;
+                }
+            }
+        </div>
+    </center>
+
+    <div class="activity-list">
+        @foreach (var item in program)
+        {
+            <div class="activity-item">
+                <p class="activity-title">Activity: @item.activity</p>
+                <p class="activity-status">
+                    Finished: <input type="checkbox" @(item.finished ? "checked" : "") disabled />
+                </p>
+            </div>
+        }
+    </div>
+}
+
+@section scripts{
+
+
+}

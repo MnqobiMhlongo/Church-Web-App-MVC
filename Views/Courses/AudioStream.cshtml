@@ -1,0 +1,48 @@
+﻿@model ChurchSystem.Models.CourseMaterial
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Audio Stream:</title>
+</head>
+<body>
+    <div>
+        <center>
+            <h2>Audio Stream</h2>
+            <h4>@Model.Name</h4>
+
+            <div id="waveform"></div>
+            <audio id="audio" controls>
+                <!-- Set the src attribute to the URL of the AudioStream action result -->
+                <source src="@Url.Action("AudioStream", "Courses", new { id = Model.MaterialId })" type="audio/mp3" />
+            </audio>
+        </center>
+    </div>
+</body>
+</html>
+
+
+@section scripts {
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var wavesurfer = WaveSurfer.create({
+                container: '#waveform',
+                waveColor: 'violet',
+                progressColor: 'purple'
+            });
+
+            // Get the audio element
+            var audio = document.querySelector('#audio');
+
+            // Load the audio element's source directly into WaveSurfer
+            wavesurfer.load(audio.src);
+        });
+    </script>
+}

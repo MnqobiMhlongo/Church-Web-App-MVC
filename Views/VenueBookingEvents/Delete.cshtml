@@ -1,0 +1,129 @@
+﻿@model ChurchSystem.Models.VenueBookingEvent
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>VenueBookingEvent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenue.VenueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenueBooking.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenueBooking.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.startTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.startTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Attendees)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attendees)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.moreSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.moreSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostCleanup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostCleanup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.equipment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.equipment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.layoutid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.layoutid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddOns)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddOns)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

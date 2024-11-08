@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Venues";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<br />
+<br />
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+<style>
+    #panorama, #panorama2 {
+        height: 400px;
+    }
+    #panorama4, #panorama3 {
+        height: 400px;
+    }
+</style>
+<br />
+<center>
+    <h2>Our Venues</h2>
+    <hr style="width:50%" />
+
+    <br />
+    <div class="row">
+
+        <div class="col-md-5" style="margin-left:125px">
+            <div class="card">
+                
+                    <!-- 3D -->
+                    <div id="panorama"></div>
+                    <!-- Card Body -->
+                    <a href="@Url.Action("ConfirmVenue", new { id = 3 })">
+                        <div class="card-body">
+                            <h5 class="card-title">Church Hall</h5>
+                            <p class="card-text">
+                                <strong>Description:</strong>A spacious hall equipped with a high-quality microphone and comfortable seating arrangements. Ideal for large gatherings, events, or worship services.<br />
+                                <strong>Capacity: </strong>60 Seats <br />
+                            </p>
+                        </div>
+                    </a>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card">
+                
+                    <!-- 3D -->
+                    <div id="panorama2"></div>
+                    <!-- Card Body -->
+                    <a href="@Url.Action("ConfirmVenue", new { id = 5 })">
+                        <div class="card-body">
+                            <h5 class="card-title">Picnic Room</h5>
+                            <p class="card-text">
+                                <strong>Description:</strong>A cozy room perfect for informal gatherings or family events. Offers a relaxed atmosphere with a flexible seating arrangement.<br />
+                                <strong>Capacity: </strong>25 Seats <br />
+                            </p>
+                        </div>
+                    </a>
+            </div>
+        </div>
+
+    </div>
+    <br/>
+    <div class="row">
+
+        <div class="col-md-5" style="margin-left:125px">
+            <div class="card">
+                <!-- 3D -->
+                <div id="panorama3"></div>
+                <!-- Card Body -->
+                <a href="@Url.Action("ConfirmVenue", new { id = 4 })">
+                    <div class="card-body">
+                        <h5 class="card-title">Yard </h5>
+                        <p class="card-text">
+                            <strong>Description:</strong>  A versatile outdoor space featuring tents and abundant seating. Suitable for outdoor events, celebrations, or relaxed meetings. <br />
+                            <strong>Capacity: </strong>60+ Seats <br />
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card">
+
+                <!-- 3D -->
+                <div id="panorama4"></div>
+                <!-- Card Body -->
+                <a href="@Url.Action("ConfirmVenue", new { id = 6 })">
+                    <div class="card-body">
+                        <h5 class="card-title">Bible Study Room</h5>
+                        <p class="card-text">
+                            <strong>Description:</strong>  A well-suited room for group study sessions, meetings, or intimate gatherings. Designed for productive discussions and collaboration. <br />
+                            <strong>Capacity: </strong>60 Seats <br />
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</center>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+@section scripts{
+    <script>
+        // Ensure the DOM is fully loaded before initializing Pannellum
+        window.onload = function () {
+            pannellum.viewer('panorama', {
+                "type": "equirectangular",
+                "autoLoad": true,
+                "autoRotate": -2,
+                "panorama": "https://i.imgur.com/wZVmCAs.jpeg"
+            });
+
+            pannellum.viewer('panorama2', {
+                "type": "equirectangular",
+                "autoLoad": true,
+                "autoRotate": -2,
+                "panorama": "https://i.imgur.com/KBKIyeC.jpeg"
+            });
+
+            pannellum.viewer('panorama3', {
+                "type": "equirectangular",
+                "autoLoad": true,
+                "autoRotate": -2,
+                "panorama": "https://i.imgur.com/ItkGTx5.jpeg"
+            });
+
+            pannellum.viewer('panorama4', {
+                "type": "equirectangular",
+                "autoLoad": true,
+                "autoRotate": -2,
+                "panorama": "https://i.imgur.com/ngBII6U.jpeg"
+            });
+        };
+    </script>
+
+}

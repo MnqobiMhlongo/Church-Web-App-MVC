@@ -1,0 +1,99 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Popup</title>
+    <link rel="stylesheet" href="~/Content/css/normalize.css" />
+    <link rel="stylesheet" href="~/Content/css/style.css" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+</head>
+<body>
+    <br />
+    <center>
+        <h1> Messages</h1>
+    </center>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#Home">Messages</a></li>
+            <li><a data-toggle="tab" href="#Menu1">Notifications</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="Home" class="tab-pane fade in active">
+
+
+                <ul id="discussion">
+                </ul>
+
+
+                <script>
+
+
+
+
+                </script>
+            </div>
+
+
+            <div id="Menu1" class="tab-pane fade">
+
+
+                @foreach (var message in ViewBag.VC)
+                {
+                    <br />
+                    <a href="#" class="invite-link" data-url="@Url.Action("Confirmation", "VenueBookingEvents", new { id = message.Item1 })">
+                        <img src="~/Content/img/appointment.png" width="40" height="40" /> @message.Item2
+                    </a><br />
+                }
+
+
+                @foreach (var message in ViewBag.PR)
+                {
+                    <br />
+                    <a href="#" class="invite-link" data-url="@Url.Action("Rating", "Events", new { eventId = message.Item1 })">
+                        <img src="~/Content/img/star.png" width="40" height="40" /> @message.Item2
+                    </a><br />
+                }
+
+                @foreach (var message in ViewBag.Invites)
+                {
+                    <br />
+                    <a href="#" class="invite-link" data-url="@Url.Action("Invite", "Events", new { id = message.Item1 })">
+                        <img src="~/Content/img/wedding-invitation.png" width="40" height="40" />[@message.Item3] | @message.Item2
+                    </a><br />
+                }
+
+            </div>
+
+            <script>
+                // Attach click event handler to each invite link
+                $(".invite-link").click(function (e) {
+                    e.preventDefault(); // Prevent default link behavior
+
+                    // Get the URL from data attribute
+                    var url = $(this).data("url");
+
+                    // Open the URL in the main window
+                    window.opener.location.href = url;
+
+                    // Close the popup window
+                    window.close();
+                });
+            </script>
+
+        </div>
+    </div>
+</body>
+</html>

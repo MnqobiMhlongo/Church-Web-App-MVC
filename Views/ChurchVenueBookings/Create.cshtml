@@ -1,0 +1,146 @@
+﻿@model ChurchSystem.Models.ChurchVenueBooking
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <center>
+
+            <img src="~/Content/img/appointment.png" width="220" height="220" />
+
+            <h4>Church Venue Booking Details </h4>
+            <hr style="width:50%" />
+        </center>
+        <br />  
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display: none;">
+            @Html.LabelFor(model => model.VenueId, "VenueId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("VenueId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.VenueId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!----- <div class="form-group">
+             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-md-10">
+                 @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+             </div>
+         </div>-->
+
+        <br />
+        <center>
+            <div class="form-group">
+                <strong><h5>Select Date</h5></strong>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.BookingDateTime, "{0:yyyy-MMMM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(model => model.BookingDateTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <strong><h5>What Kind Of Event Are You Hosting</h5></strong>
+                <div class="col-md-10">
+
+                    @Html.DropDownListFor(m => m.EventType, new SelectList(new List<SelectListItem>
+                     {
+                        new SelectListItem { Text = "Wedding or Formal Celebration", Value = "Wedding or Formal Celebration" },
+                        new SelectListItem { Text = "Conference/Seminar", Value = "Conference/Seminar" },
+                        new SelectListItem { Text = "Community Meeting", Value = "Community Meeting" },
+                        new SelectListItem { Text = "Birthday Celebration", Value = "Birthday Celebration" },
+                        new SelectListItem { Text = "Workshop", Value = "Workshop" }
+                     }, "Value", "Text"),
+                     new { @class = "form-control" })
+
+
+                    @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Proceed To Booking Details" class="btn btn-primary" />
+                </div>
+            </div>
+        </center>
+
+    </div>
+}
+<br />
+<br />
+<br />
+
+
+
+
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- jQuery UI DateTimepicker plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap DateTimePicker JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap DateTimePicker JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <script>
+        $(function () {
+            $('#datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm', // Specify the format for both date and time
+                useCurrent: false, // Do not set the current date/time when the picker is shown
+                sideBySide: false, // Display the date and time picker side by side
+                daysOfWeekDisabled: [0] // Disable Sundays (0 is Sunday)
+            });
+        });
+    </script>
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dt1').datetimepicker();
+        });
+    </script>
+}

@@ -1,0 +1,283 @@
+﻿
+@{
+    ViewBag.Title = "AdminHRC";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+`
+<div class="preloader">
+    <div class="loader">
+        <div class="loader-outter"></div>
+        <div class="loader-inner"></div>
+
+        <div class="indicator">
+            <svg width="8px" height="4px">
+                <!---- <polyline id="back" points="2 1, 8 9, 14 1" fill="none" stroke="black" stroke-width="1"></polyline>
+                <polyline id="front" points="2 1, 8 9, 14 1" fill="none" stroke="black" stroke-width="1"></polyline>-->
+            </svg>
+        </div>
+    </div>
+</div>
+
+<!-- Slider Area -->
+<section class="slider">
+    <div class="hero-slider">
+        <!-- Start Single Slider -->
+        <div class="single-slider" style="background-image: url('../../Content/img/pastor.jpg')">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="text">
+                            <h1>  <span>Holy Rosary Church:</span> Admin </h1>
+
+                            <div class="button">
+                                <a href="@Url.Action("MyCalender", "Bookings", new {username = User.Identity.Name})" class="btn">View My Calender</a>
+                                <!---- <a href="#" class="btn primary">Learn More</a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Single Slider -->
+        <!-- Start Single Slider -->
+        <div class="single-slider" style="background-image: url(../../Content/img/bible-rect.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="text">
+                            <h1> <span>Holy Rosary Church:</span> Events </h1>
+                            <div class="button">
+                                <a href="@Url.Action("Create","Events")" class="btn">New Event</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Single Slider -->
+    </div>
+</section>
+
+<!-- Pricing Table -->
+<section class="pricing-table section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Admin Menu:</h2>
+                    <!---  <img src="img/section-img.png" alt="#">
+                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet. pretiumts</p>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-users-alt-2"></i>
+                        </div>
+                        <h4 class="title">Consultations</h4>
+
+                    </div>
+                    <!-- Table List -->
+
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("Index", "Bookings", new {username = User.Identity.Name})">Confirm/Manage</a>
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+            <!-- End Single Table-->
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-play-pause"></i>
+                        </div>
+                        <h4 class="title">Online Sermons</h4>
+
+                    </div>
+                    <!-- Table List -->
+                    <!-----   <li class="cross"><i class="icofont icofont-ui-close"></i>Donec ultricies metus</li>
+                     <li class="cross"><i class="icofont icofont-ui-close"></i>Pellentesque eget nibh</li>-->
+                    </ul>
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("Index","OnlineSermons")">Upload/Manage</a>
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+            <!-- End Single Table-->
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-vehicle-delivery-van"></i>
+                        </div>
+                        <h4 class="title">Manage Orders</h4>
+
+                    </div>
+                    <!-- Table List -->
+                    <!----<ul class="table-list">
+                        <li><i class="icofont icofont-ui-check"></i>T-Shirts</li>
+                        <li><i class="icofont icofont-ui-check"></i>Bibles</li>
+                        <li><i class="icofont icofont-ui-check"></i>Rosaries</li>
+                    </ul>-->
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("AdminIndex","Order")">Manage</a>
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+            <!-- End Single Table-->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-box"></i>
+                        </div>
+                        <h4 class="title">Item Donation</h4>
+
+                    </div>
+                    <!-- Table List -->
+
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("Create", "ItemDonations")">Add New</a>
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+            <!-- End Single Table-->
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-money"></i>
+                        </div>
+                        <h4 class="title">Donations: @ViewBag.DonationsCount</h4>
+
+                    </div>
+                    <!-- Table List -->
+                    <!-----   <li class="cross"><i class="icofont icofont-ui-close"></i>Donec ultricies metus</li>
+            <li class="cross"><i class="icofont icofont-ui-close"></i>Pellentesque eget nibh</li>-->
+                    </ul>
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("Donations","Donations")">View</a>
+
+                    </div>
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("ChurchFunds","Donations")">Manage Funds</a>
+
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+            <!-- End Single Table-->
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-meeting-add"></i>
+                        </div>
+                        <h4 class="title">Events</h4>
+
+                    </div>
+                    <!-- Table List -->
+                    <!----<ul class="table-list">
+        <li><i class="icofont icofont-ui-check"></i>T-Shirts</li>
+        <li><i class="icofont icofont-ui-check"></i>Bibles</li>
+        <li><i class="icofont icofont-ui-check"></i>Rosaries</li>
+    </ul>-->
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("Events4Register","Events")">Manage Events</a>
+                    </div>
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("ReviewIndex","Events")">View Reviews</a>
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+            <!-- End Single Table-->
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-people"></i>
+                        </div>
+                        <h4 class="title">Bible Study Groups</h4>
+
+                    </div>
+                    <!-- Table List -->
+                    <!----<ul class="table-list">
+        <li><i class="icofont icofont-ui-check"></i>T-Shirts</li>
+        <li><i class="icofont icofont-ui-check"></i>Bibles</li>
+        <li><i class="icofont icofont-ui-check"></i>Rosaries</li>
+    </ul>-->
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("AdmminIndex","Courses")">Bible Study Groups</a>
+                    </div>
+                    <!-- Table Bottom -->
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("students","Quizzes")">Student Reports</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End Single Table-->
+            <!-- Single Table -->
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="single-table">
+                    <!-- Table Head -->
+                    <div class="table-head">
+                        <div class="icon">
+                            <i class="icofont-read-book"></i>
+                        </div>
+                        <h4 class="title">Church Library</h4>
+
+                    </div>
+                    <!-- Table List -->
+                    <!----<ul class="table-list">
+        <li><i class="icofont icofont-ui-check"></i>T-Shirts</li>
+        <li><i class="icofont icofont-ui-check"></i>Bibles</li>
+        <li><i class="icofont icofont-ui-check"></i>Rosaries</li>
+    </ul>-->
+                    <div class="table-bottom">
+                        <a class="btn" href="@Url.Action("AdminIndex","Books")">View Library</a>      
+                    </div>
+                    <div class="table-bottom">                       
+                        <a class="btn" href="@Url.Action("BookLoanOverview","Books")">Manage Book Loans</a>
+                    </div>
+                    <!-- Table Bottom -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+@section scripts{
+    
+    }

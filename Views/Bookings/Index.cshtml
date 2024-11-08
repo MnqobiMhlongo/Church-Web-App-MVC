@@ -1,0 +1,148 @@
+﻿@model IEnumerable<ChurchSystem.Models.Booking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<center>
+    <img src="~/Content/themes/base/images/time-svgrepo-com.svg" width="215" height="215" />
+
+    <br />
+    <br />
+    <h2>Consultation Requests</h2>
+</center>
+
+<table class="table table-hover" ">
+    <tr class="table-success">
+
+        <th>
+            <h4>Name &amp; Surname</h4>
+        </th>
+        <th>
+            <h4>Date &amp; Time </h4>
+        </th>
+        <th>
+            <h4>Reason For Consultation</h4>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.user)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purpose)
+            </td>
+            <td>
+                <a class="btn" href="@Url.Action("ApproveBooking","Bookings", new {id=item.Id})">
+                    Accept
+                </a>
+                <a class="btn" href="@Url.Action("ApproveBooking","Bookings", new {id=item.Id})">
+                    Decline
+                </a>
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>
+
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        //Where I Go NxWorries
+
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var chat = $.connection.chatHub;
+
+            // Create a function that the hub can call to update messages on the page.
+            chat.client.addNewMessageToPage = function (message1, message2) {
+                // Update UI with the received messages.
+                console.log("Message 1: " + message1 + ", Message 2: " + message2);
+            };
+
+            // Start the connection to the hub.
+            $.connection.hub.start().done(function () {
+                console.log("Connection to chatHub established.");
+            }).fail(function (error) {
+                console.log("Error establishing connection to chatHub: " + error);
+
+            });
+
+
+        });
+
+
+    </script>
+
+}
+
+<div class="button">
+    <a class="btn" href="@Url.Action("AdminHRC","Home")">Back</a>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+

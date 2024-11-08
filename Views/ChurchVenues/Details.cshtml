@@ -1,0 +1,165 @@
+﻿@model ChurchSystem.Models.ChurchVenue
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<style>
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%; /* Adjust the width of the controls */
+    }
+
+    .carousel-control-prev {
+        left: 10%; /* Adjust the distance from the left edge */
+    }
+
+    .carousel-control-next {
+        right: 10%; /* Adjust the distance from the right edge */
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(74, 174, 255, 1); /* Add a background color for visibility */
+        padding: 30px; /* Add padding for better visibility */
+        border-radius: 100%; /* Make the controls circular */
+        background-size: 50%; /* Adjust the size of the icons */
+    }
+</style>
+
+<br/>
+<center>
+    <h2> Venue Details</h2>
+</center>
+<br/>
+<!-----<div>
+    <h4>ChurchVenue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VenueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VenueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VenueDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VenueDescription)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VenueCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VenueCapacity)
+        </dd>
+
+    </dl>
+</div>
+    -->
+<!-- Image Slider -->
+<center>
+    <div id="carousel-@Model.VenueId" class="carousel slide mx-auto" data-ride="carousel">
+        <div class="carousel-inner">
+            @if (Model.VenueImages != null && Model.VenueImages.Any())
+            {
+                int i = 0;
+                foreach (var image in Model.VenueImages)
+                {
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="data:image/png;base64,@(image.ImageUrl)" class="d-block w-70" alt="@image.ImageUrl">
+                    </div>
+                    i++;
+                }
+            }
+            else
+            {
+                <div class="carousel-item active">
+                    <img src="~/Content/Images/placeholder.png" class="d-block w-70" alt="No Image Available">
+                </div>
+            }
+        </div>
+
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#carousel-@Model.VenueId" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-@Model.VenueId" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <br />
+    <br />
+    <br />
+    <dl class="dl-horizontal">
+        <h4>
+        <dt>
+            <strong>Venue: </strong>
+        </dt>
+        </h4>
+        <dd>
+            @Html.DisplayFor(model => model.VenueName)
+        </dd>
+        <hr />
+        <h4>
+        <dt>
+            <strong>Description</strong>
+            </d     t>
+            </h4>
+        <dd>
+            @Html.DisplayFor(model => model.VenueDescription)
+        </dd>
+        <hr />
+
+        <h4>
+        <dt>
+            <strong>Estimated Capacity</strong>
+        </dt>
+        </h4>
+        <dd>
+            @Html.DisplayFor(model => model.VenueCapacity)
+        </dd>
+        <hr />
+    </dl>
+
+
+    <br />
+    <br />
+    <br />
+    <p>
+        <a href="@Url.Action("Create", "ChurchVenueBookings", new { VenueId = Model.VenueId })" class="btn btn-primary">
+            Book This Venue
+        </a>
+    </p>
+</center>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VenueId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ChurchSystem.Models.VenueBookingEvent>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <img src="~/Content/img/wedding.png" width="250" height="250" />
+    <h2>My Bookings</h2>
+    <hr style="width:50%" />
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Church Venue:
+            </th>
+            <th>
+                Event:
+            </th>
+            <th>
+                Start Time:
+            </th>
+            <th>
+                End Time:
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChurchVenue.VenueName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endTime)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary" href="@Url.Action("Details", new {id = item.VenueEventId})">
+                        View Booking Details
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</center>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

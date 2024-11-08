@@ -1,0 +1,80 @@
+﻿@model ChurchSystem.Models.ChurchVenueBooking
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ChurchVenueBooking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenue.VenueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Decor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Decor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventType)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

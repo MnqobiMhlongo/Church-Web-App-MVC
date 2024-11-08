@@ -1,0 +1,70 @@
+﻿@model List<ChurchSystem.Models.Order>
+
+@{
+    ViewBag.Title = "Admin Order Management";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<h2>Admin Order Management</h2>
+
+<div class="row">
+    @foreach (var order in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    Order ID: @order.OrderId
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Order Date: @order.OrderDate.ToString("yyyy-MMMM-dd HH:mm:ss")</p>
+                    <p class="card-text">Total Amount: @order.TotalAmount.ToString("C")</p>
+                    <p class="card-text">Status: @order.OrderStatus</p>
+                </div>
+                <div class="card-footer">
+                    @Html.ActionLink("View Details", "Details", new { id = order.OrderId }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Update Status", "UpdateStatus", new { id = order.OrderId }, new { @class = "btn btn-warning btn-sm" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}
+
+<br />
+<br />
+<div class="button">
+    <a class="btn" href="@Url.Action("AdminHRC","Home")">Back</a>
+</div>
+<br />
+<br />
+<br />

@@ -1,0 +1,26 @@
+﻿@model ChurchSystem.Models.ChurchFunds
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChurchFunds</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FundName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FundName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FundId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

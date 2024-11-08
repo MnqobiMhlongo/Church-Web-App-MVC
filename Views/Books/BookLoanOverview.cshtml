@@ -1,0 +1,290 @@
+﻿@model ChurchSystem.Models.BookLoanOverviewViewModel
+@{
+    ViewBag.Title = "BookLoanOverview";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<style>
+    .underline {
+        text-decoration: underline;
+    }
+</style>
+
+<center>
+    <h2>Book Loan Overview</h2>
+</center>
+<br />
+<br />
+
+    <a onclick="showSection('allBorrowed')" class="btn btn-outline-primary">All Borrowed Books</a>
+    <a onclick="showSection('awaitingCollection')" class="btn btn-outline-secondary">Awaiting Collection</a>
+    <a onclick="showSection('awaitingReturn')" class="btn btn-outline-warning">Awaiting Return</a>
+
+
+
+<div id="allBorrowed" class="section">
+    <h3>All Borrowed Books/Reservations</h3>
+    <hr style="width:50%" />
+    <br />
+    @foreach (var item in Model.AllBorrowedBooks)
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightgray">
+                    Date: [ @item.reservedate.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="data:image/png;base64,@(item.Books.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@item.Books.Title</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="@Url.Action("AdminLoanDetails", new {id = item.bookloanId})">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <strong> Status: @item.status</strong><br />
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+    <br />
+
+</div>
+
+<div id="awaitingCollection" class="section" style="display:none;">
+    <h3>Awaiting Collection</h3>
+    <hr style="width:50%" />
+    @foreach (var item in Model.AwaitingCollection)
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightgray">
+                    Date: [ @item.reservedate.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="data:image/png;base64,@(item.Books.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@item.Books.Title</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="@Url.Action("ReservationDetails", new {id = item.bookloanId})">Details</a>
+                            <a class="btn btn-outline-success" href="javascript:void(0)" onclick="openCollectSignatureModal(@item.bookloanId)">Sign For Collection</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <strong> To: @item.username</strong>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+    <br />
+</div>
+
+<div id="awaitingReturn" class="section" style="display:none;">
+    <h3>Awaiting Return</h3>
+    <hr style="width:50%" />
+    @foreach (var item in Model.AwaitingReturn)
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightgray">
+                    Date: [ @item.reservedate.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="data:image/png;base64,@(item.Books.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@item.Books.Title</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="@Url.Action("ReservationDetails", new { id = item.bookloanId })">Details</a>
+                            <a class="btn btn-outline-success" href="javascript:void(0)" onclick="openReturnSignatureModal(@item.bookloanId)">Sign For Return</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <strong> Status: @item.status</strong> <br />
+                    <strong> To: @item.username</strong> <br />
+                    <strong>Expected Return:</strong> @item.expectedReturn.ToString("d MMMM yyyy")
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+</div>
+<!-- Modal for Collection -->
+<div class="modal fade" id="signatureCollectModal" tabindex="-1" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signatureModalLabel">Sign for Collection</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <canvas id="signatureCanvasCollect" width="400" height="200" style="border: 1px solid black;"></canvas>
+                <br />
+                <button id="clearSignatureCollect" class="btn btn-danger">Clear</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSignatureCollect">Save Signature</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Return -->
+<div class="modal fade" id="signatureReturnModal" tabindex="-1" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signatureModalLabel">Sign for Return</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <canvas id="signatureCanvasReturn" width="400" height="200" style="border: 1px solid black;"></canvas>
+                <br />
+                <button id="clearSignatureReturn" class="btn btn-danger">Clear</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSignatureReturn">Save Signature</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+<script>
+
+    function openReturnSignatureModal(bookLoanId) {
+        $('#signatureReturnModal').modal('show');
+        // Store bookLoanId in modal for later use
+        $('#signatureReturnModal').data('bookLoanId', bookLoanId);
+    }
+    function openCollectSignatureModal(bookLoanId) {
+        $('#signatureCollectModal').modal('show');
+        // Store bookLoanId in modal for later use
+        $('#signatureCollectModal').data('bookLoanId', bookLoanId);
+    }
+
+    // For Collection Modal
+let signaturePadCollect;
+let canvasCollect = document.getElementById('signatureCanvasCollect');
+
+// Initialize Signature Pad for Collection
+signaturePadCollect = new SignaturePad(canvasCollect);
+
+// Clear the signature pad for Collection
+document.getElementById('clearSignatureCollect').addEventListener('click', function () {
+    signaturePadCollect.clear();
+});
+
+// Save signature for Collection and send it to the controller
+document.getElementById('saveSignatureCollect').addEventListener('click', function () {
+    if (signaturePadCollect.isEmpty()) {
+        alert("Please provide a signature first.");
+    } else {
+        let bookLoanId = $('#signatureCollectModal').data('bookLoanId');
+        let signatureData = signaturePadCollect.toDataURL(); // Base64 string
+
+        // Post signature to the controller
+        $.ajax({
+            url: '@Url.Action("SignCollect", "Books")',
+            type: 'POST',
+            data: {
+                bookLoanId: bookLoanId,
+                signature: signatureData // Base64 string
+            },
+            success: function (response) {
+                // Redirect the user using the URL provided by the server
+                if (response.redirectUrl) {
+                    window.location.href = response.redirectUrl;
+                }
+            },
+            error: function () {
+                alert("Error saving signature.");
+            }
+        });
+    }
+});
+
+// For Return Modal
+let signaturePadReturn;
+let canvasReturn = document.getElementById('signatureCanvasReturn');
+
+// Initialize Signature Pad for Return
+signaturePadReturn = new SignaturePad(canvasReturn);
+
+// Clear the signature pad for Return
+document.getElementById('clearSignatureReturn').addEventListener('click', function () {
+    signaturePadReturn.clear();
+});
+
+// Save signature for Return and send it to the controller
+document.getElementById('saveSignatureReturn').addEventListener('click', function () {
+    if (signaturePadReturn.isEmpty()) {
+        alert("Please provide a signature first.");
+    } else {
+        let bookLoanId = $('#signatureReturnModal').data('bookLoanId');
+        let signatureData = signaturePadReturn.toDataURL(); // Base64 string
+
+        // Post signature to the controller
+        $.ajax({
+            url: '@Url.Action("SignReturn", "Books")',
+            type: 'POST',
+            data: {
+                bookLoanId: bookLoanId,
+                signature: signatureData // Base64 string
+            },
+            success: function (response) {
+                // Redirect the user using the URL provided by the server
+                if (response.redirectUrl) {
+                    window.location.href = response.redirectUrl;
+                }
+            },
+            error: function () {
+                alert("Error saving signature.");
+            }
+        });
+    }
+});
+
+</script>
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(function (section) {
+            section.style.display = 'none';
+        });
+
+        // Show the selected section
+        document.getElementById(sectionId).style.display = 'block';
+
+        // Remove underline class from all anchors
+        document.querySelectorAll('a').forEach(function (anchor) {
+            anchor.classList.remove('underline');
+        });
+
+        // Add underline class to the clicked anchor
+        document.querySelector(`a[onclick="showSection('${sectionId}')"]`).classList.add('underline');
+    }
+</script>
+
+
+
+
+c
+
+
+@section scripts{
+
+
+}

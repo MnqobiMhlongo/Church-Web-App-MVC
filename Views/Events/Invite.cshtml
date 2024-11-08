@@ -1,0 +1,153 @@
+﻿@using ZXing
+@using ZXing.QrCode
+@using ZXing.Common
+@using System.Drawing.Imaging
+
+
+@model ChurchSystem.Models.Events
+
+@{
+    ViewBag.Title = "Invite";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+@*<h2>Invite</h2>*@
+
+
+<center>
+    <div>
+        <h4>Church Event Invite</h4>
+        <hr />
+
+        <br />
+        <br />
+        <center>
+
+            @if (ViewBag.Accepted == true)
+            {
+                //Toots&TheMaytals54-46WasMyNumber
+                {
+                    var writer = new BarcodeWriter
+                    {
+                        Format = BarcodeFormat.QR_CODE,
+                        Options = new QrCodeEncodingOptions
+                        {
+                            Height = 300,
+                            Width = 300,
+                            Margin = 0
+                        }
+                    };
+
+                    var qrCode = writer.Write($"{ViewBag.Verification}");
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        qrCode.Save(memoryStream, ImageFormat.Png);
+                        var qrCodeBase64 = Convert.ToBase64String(memoryStream.ToArray());
+
+                        <img src="data:image/png;base64,@qrCodeBase64" alt="QR code"><br />
+
+                        <br />
+                        <br />
+                        <p> use qrcode to enter event </p>
+                        <a href="data:image/png;base64,@qrCodeBase64" download="qr-code.png" class="btn btn-primary">Download QR Code</a>
+                    }
+                }
+
+
+            }
+            else
+            {
+
+            }
+
+
+
+        </center>
+
+
+        <br />
+        <br />
+
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                Date And Time
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.dateTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Organizer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Organizer)
+            </dd>
+
+
+
+        </dl>
+    </div>
+
+
+    @*ViewBag.Accepted*@
+
+
+    @if (ViewBag.Accepted == true)
+    {
+        <div class="col-lg-2 col-12">
+            <div class="get-quote">
+                <a href="@Url.Action("eventProgramView","EventPrograms", new { EventId = Model.EventId })" class="btn btn-primary">View Program</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        
+        <div class="col-lg-2 col-12">
+            <div class="get-quote">
+                <a href="@Url.Action("RSVP", "Events", new { eventId = Model.EventId })" class="btn btn-primary">Accept Invite</a>
+            </div>
+        </div>
+    }
+
+
+
+
+
+</center>
+
+
+@section scripts{
+
+
+
+
+}

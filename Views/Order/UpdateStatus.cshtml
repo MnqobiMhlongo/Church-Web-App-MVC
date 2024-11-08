@@ -1,0 +1,39 @@
+﻿@model ChurchSystem.Models.Order
+
+@{
+    ViewBag.Title = "Update Order Status";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+
+<br />
+<br />
+<br />
+<br />
+
+<center>
+    <h2>Update Order Status</h2>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model => model.OrderId)
+        <div class="form-group">
+          
+            <div class="form-group">
+                @Html.Label("Update")
+                <select class="form-control" name="newStatus">
+                    <option value="Pending">Pending</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Status</button>
+    }
+</center>
+
+<div>
+    @Html.ActionLink("Back to Admin Index", "AdminIndex", null, new { @class = "btn btn-secondary" })
+</div>

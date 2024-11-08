@@ -1,0 +1,51 @@
+﻿@model ChurchSystem.Models.OnlineSermons
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OnlineSermons</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SermonTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SermonTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SermonDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SermonDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SermonId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

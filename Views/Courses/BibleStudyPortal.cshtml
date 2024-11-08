@@ -1,0 +1,123 @@
+﻿@model IEnumerable<ChurchSystem.Models.Course>
+
+@{
+    ViewBag.Title = "AdmminIndex";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <br />
+    <br />
+    <h2> Courses For @ViewBag.Level </h2>
+    <br />
+    <br />
+    <hr style="width:50%" />
+</center>
+<style>
+    .card {
+        height: 100%;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 20px;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .children-header {
+        background-color: lightblue;
+    }
+
+    .youth-header {
+        background-color: lightgreen;
+    }
+
+    .young-adults-header {
+        background-color: lightcoral;
+    }
+
+    .adults-header {
+        background-color: lightgray;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+</style>
+
+<center>
+    <div class="row">
+        @foreach (var course in Model)
+        {
+    <center>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header @GetCardHeaderClass(course.Level)">
+                    @course.CourseName
+                </div>
+                <div class="card-content ">
+                    <center><p>@course.CourseDescription</p></center>
+                </div>
+                <div class="card-footer">
+                    <p>Duration: @course.estDuration</p>
+                    <p>Level: @course.Level</p>
+                    <div class="row">
+
+                        <div class="button" style="padding-inline-start: 190px">
+                            <a class="btn btn-outline-primary " href="@Url.Action("BibleStudy","Courses", new { id = course.CourseId })">JOIN</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+        }
+    </div>
+</center>
+@functions{
+    public string GetCardHeaderClass(string level)
+    {
+        switch (level)
+        {
+            case "Children’s Ministry/Sunday School":
+                return "children-header";
+            case "Youth Ministry":
+                return "youth-header";
+            case "Young Adults":
+                return "young-adults-header";
+            case "Adults":
+                return "adults-header";
+            default:
+                return "adults-header";
+        }
+    }
+}
+
+@section scripts{
+
+
+
+
+
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+

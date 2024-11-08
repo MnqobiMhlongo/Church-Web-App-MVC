@@ -1,0 +1,164 @@
+﻿@model IEnumerable<ChurchSystem.Models.CourseMaterial>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<style>
+    .card {
+        height: 100%;
+        margin-bottom: 15px; /* Add margin to create space between cards */
+    }
+
+    .card-img-top {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .add-card {
+        border: 2px dashed #ccc; /* Example styling for the "Add Vehicle" card */
+        text-align: center;
+        padding: 20px;
+    }
+
+    .background-image {
+        margin: 0;
+        padding: 0;
+        background-image: url('@ViewBag.BackgroundImageUrl');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+
+<h2>Bible Study Material</h2>
+<!-------
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatePosted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileUrl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatePosted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileUrl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaterialId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaterialId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaterialId })
+        </td>
+    </tr>
+}
+
+</table>
+    -->
+<div class="row">
+    @foreach (var sermon in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@sermon.Name</h5>
+                </div>
+                <div class="card-body">
+                    @if (sermon.FileType == "Audio")
+                    {
+                        <a href="@Url.Action("AudioStream", new { id = sermon.MaterialId })">
+                            <img src="~/Content/img/audio.svg" class="card-img-top" alt="Audio Image">
+                        </a>
+                    }
+                    else if (sermon.FileType == "Video")
+                    {
+                        <a href="@Url.Action("VideoStream", new { id = sermon.MaterialId})">
+                            <img src="~/Content/img/vido.svg" class="card-img-top" alt="Video Image">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("SermonNotes", new {id = sermon.MaterialId})">
+                            <img src="~/Content/img/notes.svg" class="card-img-top" alt="Default Image">
+                        </a>
+                    }
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">Description: @sermon.Description</p>
+                    <p class="card-text">Date Posted: @sermon.DatePosted</p>
+
+                    <center>
+                        <div class="row">
+                            <div class="button">
+                                <a class="btn btn-primary" href="@Url.Action("AdminHRC","Home")">View</a>
+                            </div>
+
+                            <div class="button">
+                                <a class="btn btn-secondary" href="@Url.Action("AdminHRC","Home")">Download</a>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-4">
+        <div class="card add-card">
+            <a href="@Url.Action("Create")">
+                <!-- Add the hyperlink to the Create page -->
+                <div class="add-icon">
+                    <i class="fas fa-plus"></i> <!-- Use a font-awesome plus icon or any other plus sign -->
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">New Upload</h5>
+                    <p class="card-text">Click here to upload</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+
+
+
+}

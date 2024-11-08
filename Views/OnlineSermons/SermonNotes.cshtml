@@ -1,0 +1,110 @@
+﻿@model ChurchSystem.Models.OnlineSermons
+
+@{
+    ViewBag.Title = "SermonNotes";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+<!---<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">PDF Viewer</h5>
+    </div>
+    <div class="card-body">
+        <iframe src="@Model.FileUrl" width="100%" height="500"></iframe>
+    </div>
+</div>--->
+<center>
+    <h2>Sermon Notes:</h2>
+
+    <h3>@Model.SermonTitle</h3>
+    <br />
+    <iframe src="@Model.FileUrl" width="65%" height="600px" frameborder="0"></iframe>
+    <!----<div id="pdf-container"></div>--->
+
+    <br />
+    <br />
+    <h3>Comments</h3>
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        <ul>
+            @foreach (var comment in Model.Comments)
+            {
+                <li>
+                    <strong>@comment.UserName</strong> - @comment.Timestamp
+                    <p>" @comment.Text "</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+
+    <!-- Add comment form -->
+    @using (Html.BeginForm("NotesAddComment", "OnlineSermons", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.SermonId)
+
+        <div>
+            @Html.LabelFor(model => model.Comments.FirstOrDefault().Text, "Enter your comment:")
+            @Html.TextAreaFor(model => model.Comments.FirstOrDefault().Text)
+        </div>
+        <button type="submit">Add Comment</button>
+    }
+</center>
+<br />
+<br />
+<br/>
+<u>
+    <a href="@Url.Action("UserIndex","OnlineSermons")">Back</a>
+</u>
+<br/>
+<br />
+<br />
+
+
+
+@section scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.js"></script>
+
+    <script>
+    // URL of the PDF file
+    var pdfUrl = "@Model.FileUrl";
+
+    // Fetch the PDF document
+    fetch(pdfUrl).then(function(response) {
+        return response.arrayBuffer();
+    }).then(function(buffer) {
+        // Render PDF
+        pdfjsLib.getDocument(buffer).promise.then(function(pdf) {
+            // Render the first page of the PDF
+            pdf.getPage(1).then(function(page) {
+                var scale = 1.5;
+                var viewport = page.getViewport({ scale: scale });
+
+                // Prepare canvas using PDF page dimensions
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                // Render PDF page into canvas context
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                page.render(renderContext);
+
+                // Append canvas to container
+                var container = document.getElementById('pdf-container');
+                container.appendChild(canvas);
+            });
+        });
+    });
+    </script>
+
+}
+

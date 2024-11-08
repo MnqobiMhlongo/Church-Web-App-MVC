@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Attendance";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <h2>Attendance</h2>
+
+
+    <div style="width: 20%; margin: auto;">
+        <canvas id="attendeesChart"></canvas>
+    </div>
+
+
+</center>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th>Attendee</th>
+            <th>Present/Absent</th>
+            <th>Total: @ViewBag.Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Attendees != null && ViewBag.Attendees.Count > 0)
+        {
+            int count = 1;
+            foreach (var attendee in ViewBag.Attendees)
+            {
+                <tr>
+                    <td><img src="~/Content/img/user-check.png" width="25" height="25 " /></td>
+                    <td>@count</td>
+                    <td>@attendee.Attandee</td>
+                    @if (@attendee.attended == true)
+                    {
+                        <td><img src="~/Content/img/accept.png" width="25" height="25 " /></td>
+                    }
+                    else
+                    {
+                        <td><img src="~/Content/img/cross.png" width="25" height="25 " /></td>
+                    }
+                    <td></td>
+                </tr>
+                count++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">No attendees found</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var ctx = document.getElementById('attendeesChart').getContext('2d');
+
+            // Retrieve data from ViewBag
+            var totalAttendees = @ViewBag.Count;
+            var attendedCount = @ViewBag.Attended;
+
+            var data = {
+                labels: ['Attended', 'Not Attended'],
+                datasets: [{
+                    data: [attendedCount, totalAttendees - attendedCount],
+                    backgroundColor: ['#36A2EB', '#FF6384']
+                }]
+            };
+
+            var options = {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            };
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: options
+            });
+        });
+    </script>
+}

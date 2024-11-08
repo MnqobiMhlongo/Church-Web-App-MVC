@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ChurchSystem.Models.Events>
+
+@{
+    ViewBag.Title = "Events4Register";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<style>
+    .btn-create, .btn-view-past {
+        margin: 10px 0;
+    }
+
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .get-quote .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+</style>
+
+<h2 class="text-center">Events</h2>
+
+<div class="btn-container">
+    <div class="get-quote">
+        <a href="@Url.Action("Create", "Events")" class="btn btn-primary btn-create">Create New Event</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>Date and Time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.dateTime)</td>
+                <td class="btn-group">
+                    <div class="get-quote">
+                        <a href="@Url.Action("EventRegister", "Events", new { eventId = item.EventId })" class="btn btn-primary">Attendance Register</a>
+                    </div>
+                    <div class="get-quote">
+                        <a href="@Url.Action("Delete", "Events", new { id = item.EventId })" class="btn btn-danger">Cancel Event</a>
+                    </div>
+                    <div class="get-quote">
+                        <a href="@Url.Action("ActivityUpdate", "EventPrograms", new { EventId = item.EventId })" class="btn btn-success">Start/Update Event</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="btn-container">
+    <div class="get-quote">
+        <a href="@Url.Action("Event", "Events")" class="btn btn-secondary btn-view-past">View Past Events</a>
+    </div>
+</div>
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}

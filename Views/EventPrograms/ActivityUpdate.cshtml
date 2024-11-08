@@ -1,0 +1,133 @@
+﻿@model IEnumerable<ChurchSystem.Models.EventProgram>
+
+@{
+    ViewBag.Title = "Activity Update";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .content-wrapper {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+        }
+
+    .btn-end-event {
+        display: block;
+        width: 150px;
+        margin: 20px auto;
+        padding: 10px 20px;
+        text-align: center;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+        .btn-end-event:hover {
+            background-color: #45a049;
+        }
+</style>
+
+<div class="content-wrapper">
+    <h2>Program Update</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Activity</th>
+                <th>Done</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.activity)
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.finished, new { @class = "finished-checkbox", data_programId = item.programId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="@Url.Action("Finish", "Events", new { id = Model.FirstOrDefault()?.EventId })" class="btn-end-event">End Event</a>
+</div>
+
+@section scripts {
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+
+            // Handle checkbox click event
+            $(".finished-checkbox").change(function () {
+                var programId = $(this).data("programid"); // Get the program ID from the data attribute
+                var isChecked = $(this).is(":checked"); // Check if the checkbox is checked
+
+                // Make an AJAX call to the controller method
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SetFinished", "EventPrograms")",
+                    data: { programId: programId, isFinished: isChecked },
+                    success: function (response) {
+                        showSuccessMessage("Status updated successfully.");
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("An error occurred while updating the status.");
+                    }
+                });
+            });
+        });
+    </script>
+}

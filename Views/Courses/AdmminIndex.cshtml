@@ -1,0 +1,186 @@
+﻿e4@model IEnumerable<ChurchSystem.Models.Course>
+
+@{
+    ViewBag.Title = "AdmminIndex";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <br />
+    <br />
+    <h2>Manage Bible Study Courses</h2>
+    <br />
+    <br />
+    <hr style="width:50%" />
+</center>
+<style>
+    .card {
+        height: 100%;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 20px;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .children-header {
+        background-color: lightblue;
+    }
+
+    .youth-header {
+        background-color: lightgreen;
+    }
+
+    .young-adults-header {
+        background-color: lightcoral;
+    }
+
+    .adults-header {
+        background-color: lightgray;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .add-card {
+        height: 100%;
+        border: 2px dashed #ccc;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #888;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .add-card:hover {
+            background-color: #f0f0f0;
+        }
+</style>
+
+
+
+<div class="row">
+    @foreach (var course in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header @GetCardHeaderClass(course.Level)">
+                    @course.CourseName
+                </div>
+                <div class="card-content ">
+                    <center><p>@course.CourseDescription</p></center>
+                </div>
+                <div class="card-footer">
+                    <p>Duration: @course.estDuration</p>
+                    <p>Level: @course.Level</p>
+                    <div class="row" >
+                        <center>
+                            <div style="padding-left:100px">
+                                <div class="button">
+                                    <a class="btn btn-outline-primary" href="@Url.Action("CourseMaterial","CourseMaterials", new {CourseId = course.CourseId})">Manage Materials</a>
+                                </div>
+                                <div class="button">
+                                    <a class="btn btn-outline-info" href="@Url.Action("Create", "BibleStudyClasses", new { CourseId = course.CourseId })">Schedule Bible Study Session</a>
+                                </div>
+                                <div class="button">
+                                    <a class="btn btn-light" href="@Url.Action("adminCourseSessionsCalender", "BibleStudyClasses", new { CourseId = course.CourseId })">Calender</a>
+                                </div>
+                                <div class="button">
+                                    <a class="btn btn-outline-secondary" href="@Url.Action("Create","Announcements", new { CourseId = course.CourseId})">New Announcement</a>
+                                </div>
+                                <div class="button">
+                                    <a class="btn btn-danger" href="@Url.Action("Delete", "Courses", new { id = course.CourseId })">Remove</a>
+                                </div>
+                                <div class="button">
+                                    <a class="btn btn-outline-warning" href="@Url.Action("quizIndex", "Quizzes", new { id = course.CourseId })">Quizzes</a>
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Add New Card -->
+    <div class="col-md-4">
+        <a href="@Url.Action("Create")">
+            <div class="card add-card">
+                + Add New Bible Study
+            </div>
+        </a>
+    </div>
+</div>
+
+<br/>
+<br/>
+<center>
+    <a href="@Url.Action("AdminHRC","Home")" class="btn btn-outline-primary">Home</a>
+</center>
+@functions{
+    public string GetCardHeaderClass(string level)
+    {
+        switch (level)
+        {
+            case "Children’s Ministry/Sunday School":
+                return "children-header";
+            case "Youth Ministry":
+                return "youth-header";
+            case "Young Adults":
+                return "young-adults-header";
+            case "Adults":
+                return "adults-header";
+            default:
+                return "adults-header";
+        }
+    }
+}
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

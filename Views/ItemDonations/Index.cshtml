@@ -1,0 +1,158 @@
+﻿@model IEnumerable<ChurchSystem.Models.ItemDonations>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+
+<br />
+
+
+
+<center>
+    <h2>Charity Shop</h2>
+    <br />
+    <br />
+    <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon"><i class="fas fa-cross"></i></div>
+        <div class="divider-custom-line"></div>
+    </div>
+</center>
+
+
+<!---
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DonorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DonorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageUrl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DonationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DonationId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DonationId })
+        </td>
+    </tr>
+}
+
+</table>--->
+
+
+<div class="row">
+    @foreach (var vehicle in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+
+                <img src="data:image/png;base64,@(vehicle.ImageUrl)" class="card-img-top" alt="Vehicle Image">
+                <div class="card-body">
+                    <h5 class="card-title">@vehicle.itemDescription</h5>
+                    <p class="card-text">
+                        <strong>Price:</strong> R @vehicle.Price<br />
+
+                        <a href="@Url.Action("ItemAddToCart", "Basket" ,new { productId = vehicle.DonationId, quantity = 1 }, null)" class="elements">
+                            <img src="~/Content/themes/base/images/add-cart.png" width="40" height="40" />
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+    
+
+
+    <div class="col-lg-2 col-12">
+        <div class="get-quote">
+            <a class="btn" href="@Url.Action("HRC","Home")">Back</a>
+        </div>
+    </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>
+
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}

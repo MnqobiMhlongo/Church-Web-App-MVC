@@ -1,0 +1,95 @@
+﻿@model ChurchSystem.Models.OnlineSermons
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("Create", "OnlineSermons", FormMethod.Post, new { enctype = "multipart/form-data", @class = "vehicle-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <center>
+        <img src="~/Content/img/cloud-computing.png" width="250" height="250" />
+        <h4>Upload Sermons</h4>
+        <br />
+
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.SermonTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SermonTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SermonTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SermonDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SermonDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SermonDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileType, "Media", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <select id="ReasonSelect" name="ReasonSelect" class="form-control">
+                        <option value="Select">Select</option>
+                        <option value="Audio">Audio</option>
+                        <option value="Video">Video</option>
+                        <option value="Notes">Notes</option>
+                    </select>
+                </div>
+                <input type="hidden" id="FileType" name="FileType" />
+            </div>
+
+
+
+
+
+
+            <div class="form-group">
+                <input type="file" name="ImageFile" id="ImageFile" />
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Send" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </center>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+<br />
+<br />
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            // Handle Gender select change event
+            $("#ReasonSelect").change(function () {
+                var selectedValue = $(this).val();
+                // Set the hidden Gender textbox's value to the selected option
+                $("#FileType").val(selectedValue);
+                var selectedChildName = $("#option:selected").text();
+                console.log(selectedValue);
+            });
+        });
+
+    </script>
+}

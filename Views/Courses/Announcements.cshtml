@@ -1,0 +1,60 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Announcements</title>
+   
+        
+   
+    @{
+        var announcements = ViewBag.AM as List<ChurchSystem.Models.Announcement>;
+    }
+
+</head>
+<body>
+    <div>
+
+        @if (announcements == null)
+        {
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color:lightgrey">
+                        <hr />
+                        <div class="row">
+                            <p>No Announcements Have Been Posted</p>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var message in announcements)
+            {
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style="background-color:lightgrey">
+                            Date: [ @message.DateTimeSent.ToString("d MMMM yyyy")  ] <br />
+                            
+                            <div class="row">
+                               <p> -  @message.Message</p>
+                            </div>
+                            
+                            <b> : @message.author</b>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            }
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@model ChurchSystem.Models.Quiz
+@{
+    ViewBag.Title = "Finish";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+@{
+    var quiz = ViewBag.QS as List<ChurchSystem.Models.Question>;
+}
+
+<center>
+    <h2>Quiz Q &amp; A</h2>
+    <br />
+</center>
+
+@foreach (var q in quiz)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@q.Text</h5><br />
+            <ul>
+                <li> &bull;  @q.Answer </li>
+                <li> &bull;  @q.Answer2</li>
+                <li> &bull; @q.CorrectAnswer</li>
+            </ul>
+            <a class=" btn btn-outline-danger" href="@Url.Action("DeleteConfirmed", new {id = q.Id})">Remove</a><br />
+        </div>
+    </div>
+
+}
+<br/>
+<br />
+<br />
+<center>
+    <a class=" btn btn-outline-primary" href="@Url.Action("AddQuestions","Quizzes", new { QuizId = ViewBag.ID })">Add Question</a><br/><br />
+    <a class=" btn btn-outline-success" href="@Url.Action("quizIndex","Quizzes", new { id = ViewBag.CID, successMessage = "Quiz Created" })">Finish</a>
+</center>
+<br />
+<br />
+<br />
+<br />
+
+
+@section scripts{
+
+}
+

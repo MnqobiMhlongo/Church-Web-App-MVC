@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ChurchSystem.Models.VenueImages>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<!------<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChurchVenue.VenueName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ImageId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ImageId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ImageId })
+            </td>
+        </tr>
+    }
+
+</table>
+    -->
+
+<center>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="@Url.Action("Create", new { id = item.ImageId })">
+                        <img src="data:image/png;base64,@(item.ImageUrl)" alt="Church Leader Image" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.ChurchVenue.VenueName</h5>
+                            <p class="card-text">
+                                <strong>Image Name</strong> @item.Imagename<br />
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</center>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

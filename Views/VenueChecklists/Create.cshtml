@@ -1,0 +1,122 @@
+﻿@model ChurchSystem.Models.VenueChecklist
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<center>
+    <h2>Complete Venue Checklist</h2>
+    <hr style="width:50%" />
+</center>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="display:none">
+        @Html.LabelFor(model => model.VenueId, "VenueId", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.DropDownList("VenueId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VenueId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <center>
+        <div class="card" style="max-width:700px">
+            <div class="card-header" style="background-color:moccasin">
+                Venue is Clean
+            </div>
+            <div class="card-body">
+                @Html.EditorFor(model => model.Cleaned)
+            </div>
+        </div>
+    </center>
+    <br />
+    <center>
+        <div class="card" style="max-width:700px">
+            <div class="card-header" style="background-color:moccasin">
+               Microphone,Sound System and Speakers Is Setup/Functional
+            </div>
+            <div class="card-body">
+                @Html.EditorFor(model => model.SoundEquipemnt)
+            </div>
+        </div>
+    </center>
+    <br />
+    <center>
+        <div class="card" style="max-width:700px">
+            <div class="card-header" style="background-color:moccasin">
+              All Chairs Setup/Usable
+            </div>
+            <div class="card-body">
+                @Html.EditorFor(model => model.Chairs)
+            </div>
+        </div>
+    </center>
+
+    <br />
+    <center>
+        <div class="card" style="max-width:700px">
+            <div class="card-header" style="background-color:moccasin">
+               Lights Functional
+            </div>
+            <div class="card-body">
+                @Html.EditorFor(model => model.Lights)
+            </div>
+        </div>
+    </center>
+
+    @if(ViewBag.outside == true )
+    {
+        <br />
+        <center>
+            <div class="card" style="max-width:700px">
+                <div class="card-header" style="background-color:moccasin">
+                   Tent Setup Complete
+                </div>
+                <div class="card-body">
+                    @Html.EditorFor(model => model.Tents)
+                </div>
+            </div>
+        </center>
+    }
+
+    <br />
+    <center>
+        <div class="card" style="max-width:700px">
+            <div class="card-header" style="background-color:moccasin">
+               All Safety Equipment Available(Fire Extinguishers and First Aid Kits)
+            </div>
+            <div class="card-body">
+                @Html.EditorFor(model => model.SafetyEquipment)
+            </div>
+        </div>
+    </center>
+    <br/>
+    <center>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Done" class="btn btn-success" />
+            </div>
+        </div>
+    </center>
+</div>
+}
+
+<br/>
+<br /><br />
+      <br />
+<br />
+<br />
+<br />
+
+
+@section scripts{
+    
+    
+    
+    
+}

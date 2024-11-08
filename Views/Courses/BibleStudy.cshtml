@@ -1,0 +1,310 @@
+﻿
+@{
+    ViewBag.Title = "BibleStudy";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+@{
+    var courseMaterials = ViewBag.CM as List<ChurchSystem.Models.CourseMaterial>;  // Cast the ViewBag data
+    var messages = ViewBag.AM as List<ChurchSystem.Models.Announcement>;
+    var qzs = ViewBag.qz as List<ChurchSystem.Models.Quiz>;
+
+}
+
+<ul class="pro-features">
+    <a class="get-pro" href="#">Chat</a>
+    <li class="big-title">Engage with Us</li>
+    <li class="title">Bible Study Features</li>
+    <li>Interactive Bible Study Chatbot</li>
+    <li>Group Discussions and Hub for Members</li>
+
+    <div class="button">
+        <a href="@Url.Action("ChatBot","BibleStudyClasses")" target="_blank" class="btn">Bible Study Chatbot</a>
+        <a href="@Url.Action("StudyGroupChat","BibleStudyClasses", new { gn = ViewBag.lvl })" target="_blank" class="btn">Group Chat</a>
+    </div>
+</ul>
+
+
+<center>
+    
+    @if (ViewBag.comp != null)
+    {
+        <img src="~/Content/img/medalt.gif" width="50" height="50" /><h2>Bible Study: @ViewBag.NM</h2>
+}
+else { <h2>Bible Study: @ViewBag.NM</h2>}
+
+    <hr style="width:50%" />
+</center>
+<br />
+
+<a href="javascript:void(0);" onclick="openPopup(@ViewBag.CID)">
+    <div class="col-md-14">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgrey">
+                <img src="~/Content/img/announcements.png" width="30" height="30" /> Announcements(@ViewBag.AMC)
+            </div>
+        </div>
+    </div>
+</a>
+
+<a href="@Url.Action("CourseSessionsCalender","BibleStudyClasses", new { CourseId = ViewBag.CID })">
+    <div class="col-md-14">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgrey">
+                <img src="~/Content/img/calendar.png" width="30" height="30" /> Calender
+            </div>
+        </div>
+    </div>
+</a>
+
+<br />
+<br />
+
+
+
+
+<!---- <div class="row">
+     @foreach (var sermon in courseMaterials)
+     {
+         <div class="col-md-4 mb-4">
+             <div class="card">
+                 <div class="card-header">
+                     <h5 class="card-title">@sermon.Name</h5>
+                 </div>
+                 <div class="card-body">
+                     @if (sermon.FileType == "AUDO")
+                     {
+                         <a href="@Url.Action("AudioStream", new { id = sermon.MaterialId })">
+                             <img src="~/Content/img/audio.svg" class="card-img-top" alt="Audio Image">
+                         </a>
+                     }
+                     else if (sermon.FileType == "VIDEO")
+                     {
+                         <a href="@Url.Action("VideoStream", new { id = sermon.MaterialId})">
+                             <img src="~/Content/img/vido.svg" class="card-img-top" alt="Video Image">
+                         </a>
+                     }
+                     else
+                     {
+                         <a href="@Url.Action("SermonNotes", new {id = sermon.MaterialId})">
+                             <img src="~/Content/img/notes.svg" class="card-img-top" alt="Default Image">
+                         </a>
+                     }
+                 </div>
+                 <div class="card-footer">
+                     <p class="card-text">Description: @sermon.Description</p>
+                     <p class="card-text">Date Posted: @sermon.DatePosted</p>
+
+                     <center>
+                         <div class="row">
+                             <div class="button">
+                                 <a class="btn btn-primary" href="@Url.Action("AdminHRC","Home")">View</a>
+                             </div>
+
+                             <div class="button">
+                                 <a class="btn btn-secondary" href="@Url.Action("AdminHRC","Home")">Download</a>
+                             </div>
+                         </div>
+                     </center>
+                 </div>
+             </div>
+         </div>
+     }
+ </div>--->
+
+
+
+
+<br />
+<br />
+
+
+
+<br />
+
+
+
+
+<h4>Uploads</h4>
+<hr style="width:60%" />
+<br />
+<br />
+
+@foreach (var serm in courseMaterials)
+
+{
+    <div class
+    <div class="row">
+
+    </div>
+    if (serm.FileType == "VIDEO")
+{
+          <div c
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightgray">
+                    Date: [ @serm.DatePosted.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="~/Content/img/book.png" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@serm.Name</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="javascript:void(0);" onclick="openVideoStream(@serm.MaterialId)">Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+    else if (serm.FileType == "AUDIO FILE")
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightgray">
+                    Date: [ @serm.DatePosted.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="~/Content/img/audio-book.png" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@serm.Name</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="javascript:void(0);" onclick="openAudioStream(@serm.MaterialId)">Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+    else
+    {
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightgray">
+                    Date: [ @serm.DatePosted.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="~/Content/img/pdf.png" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@serm.Name</h4>
+
+                        <div class="button" style="padding-left:600px">
+                            <a class="btn btn-outline-info" href="javascript:void(0);" onclick="openPDFStream(@serm.MaterialId)">View</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+}
+
+<h4>Fun Quizzes: To Test Your Knowledge</h4>
+<hr style="width:60%" />
+
+
+@if (qzs == null)
+{
+
+}
+else
+{
+
+    foreach (var q in qzs)
+    {
+
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="background-color:lightblue">
+                    Date: [ @q.CreatedAt.ToString("d MMMM yyyy") ] <br />
+                    <hr />
+                    <div class="row">
+                        <img src="~/Content/img/quiz.png" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@q.Title</h4>
+
+                        <div class="button" style="padding-inline-start:600px">
+                            <a class="btn btn-outline-info" href="@Url.Action("Details","Quizzes", new { id = q.QuizID})">View Quiz</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+<br />
+<br />
+
+      @if(ViewBag.comp != null)
+            {
+                <h4>Completion Certification</h4>
+                <hr style="width:60%" />
+            <div class="col-md-12">
+      <div class="card">
+          <div class="card-header" style="background-color:lightblue">
+              <p class="text-success">Congratulations!</p> 
+              <hr />
+              <div class="row">
+                  <img src="~/Content/img/medalt.gif" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">Completion Certificate</h4>
+
+                  <div class="button" style="padding-inline-start:600px">      
+                      <a class="btn btn-outline-success" href="@Url.Content("~/Content/CompletionCertificate.pdf")">Download Certificate</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+       }
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+
+@section scripts{
+    <script>
+          function openPopup(courseId) {
+              var url = '@Url.Action("Announcements", "Courses")' + '?id=' + courseId;
+              var popup = window.open(url, 'PopupWindow', 'width=800,height=400');
+              popup.focus();
+          }
+
+        function openVideoStream(MaterialId) {
+            var url = '@Url.Action("VideoStream", "Courses")' + '?id=' + MaterialId;
+            var popup = window.open(url, 'PopupWindow', 'width=900,height=500');
+            popup.focus();
+        }
+
+        function openAudioStream(MaterialId) {
+            var url = '@Url.Action("AudioStream", "Courses")' + '?id=' + MaterialId;
+            var popup = window.open(url, 'PopupWindow', 'width=500,height=300');
+            popup.focus();
+        }
+
+        function openPDFStream(MaterialId) {
+            var url = '@Url.Action("PdfStream", "Courses")' + '?id=' + MaterialId;
+            var popup = window.open(url, 'PopupWindow', 'width=900,height=500');
+            popup.focus();
+        }
+
+        function downloadFile(fileUrl) {
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = ''; // The browser will infer the filename, or you can specify one
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+
+}

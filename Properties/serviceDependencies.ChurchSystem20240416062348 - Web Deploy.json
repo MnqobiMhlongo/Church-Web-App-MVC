@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/churchsystemdbserver/databases/HRC_DB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Default"
+    }
+  }
+}

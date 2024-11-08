@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<main>
+    <div class="row justify-content-center">
+        <section class="col-md-4" aria-labelledby="calendarSectionTitle">
+            <center>
+                <a href="@Url.Action("Calender", "Events")">
+                    <img alt="Calendar Logo" src="~/Content/themes/base/images/calendar.png" height="325" width="325">
+                </a>
+
+                <h6 id="calendarSectionTitle">View Church Calendar</h6>
+                <br />
+            </center>
+        </section>
+
+        <section class="col-md-4" aria-labelledby="mapSectionTitle">
+            <center>
+                <a href="@Url.Action("Map", "Events")">
+                    <img alt="Map Logo" src="~/Content/themes/base/images/mp.png" height="305" width="305">
+                </a>
+
+                <h6 id="mapSectionTitle">Locate Our Church</h6>
+            </center>
+        </section>
+
+        <section class="col-md-4" aria-labelledby="donateSectionTitle">
+            <center>
+                <a href="@Url.Action("Create", "Donations")">
+                    <img alt="Donation Logo" src="~/Content/themes/base/images/donate.png" height="325" width="325">
+                </a>
+
+                <h6 id="donateSectionTitle">Donate Funds</h6>
+            </center>
+        </section>
+
+        <section class="col-md-4" aria-labelledby="donateSectionTitle">
+            <center>
+                <a href="@Url.Action("CLList", "Bookings")">
+                    <img alt="Donation Logo" src="~/Content/themes/base/images/group.png" height="325" width="325">
+                </a>
+                <h6 id="donateSectionTitle">Our Church Leaders</h6>
+            </center>
+        </section>
+
+        <section class="col-md-4" aria-labelledby="donateSectionTitle">
+            <center>
+                <a href="@Url.Action("Create", "Bookings")">
+                    <img alt="Donation Logo" src="~/Content/themes/base/images/talk.png" height="325" width="325">
+                </a>
+
+                <h6 id="donateSectionTitle">Book Consultation</h6>
+            </center>
+        </section>
+    </div>
+</main>
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ChurchSystem.Models.VenueChecklist>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cleaned)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoundEquipemnt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Chairs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lights)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tents)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SafetyEquipment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChurchVenue.VenueName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cleaned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoundEquipemnt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Chairs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lights)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tents)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SafetyEquipment)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,48 @@
+﻿@model ChurchSystem.Models.EventDecorLayOuts
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EventDecorLayOuts</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.layoutName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.layoutName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.layoutImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.layoutImageUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Layoutid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

@@ -1,0 +1,74 @@
+﻿@model ChurchSystem.Models.ItemDonations
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/ChurchLayout.cshtml";
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+<div style="text-align: center;">
+
+    <img src="@Model.ImageUrl" alt="Vehicle Image" width="615" height="415" />
+    <h4>Item</h4>
+    <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon"><i class="fas fa-cross"></i></div>
+        <div class="divider-custom-line"></div>
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DonorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+
+
+    </dl>
+</div>
+
+
+<br />
+
+<br />
+<br />
+<br />
+<br />
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; graceofgodchurch</small></div>
+</div>

@@ -1,0 +1,62 @@
+﻿@model ChurchSystem.Models.ChurchVenue
+
+@{
+    ViewBag.Title = "ConfirmVenue";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+
+
+<br />
+<br />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+<center>
+    <h2>Confirm Venue @Model.VenueName</h2>
+    <hr style="width:50%" />
+
+    <br />
+    <div class="card">
+        <!-- 3D Panorama -->
+        <center>
+            <div id="panorama" style="height: 600px; width:700px;"></div>
+            </center>
+            <!-- Card Body -->
+            <div class="card-body">
+                <h5 class="card-title">@Model.VenueName</h5>
+                <p class="card-text">
+                    <strong>Description:</strong> @Model.VenueDescription <br />
+                    <strong>Capacity: </strong> @Model.VenueCapacity Seats <br />
+                </p>
+
+
+                <a href="@Url.Action("Create", "ChurchVenueBookings", new { VenueId = Model.VenueId })" class="btn btn-outline-secondary">
+                    Confirm Venue
+                </a>
+            </div>
+</div>
+</center>
+
+<br />
+<br />
+<br />
+<br />
+
+@section scripts{
+  
+    <script>
+        // Ensure the DOM is fully loaded before initializing Pannellum
+        window.onload = function () {
+            pannellum.viewer('panorama', {
+                "type": "equirectangular",
+                "autoLoad": true,
+                "autoRotate": -2,
+                "panorama": "@Model.PanoramaUrl"
+            });
+        };
+    </script>
+}
+

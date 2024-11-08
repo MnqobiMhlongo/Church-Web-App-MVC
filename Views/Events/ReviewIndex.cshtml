@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ChurchSystem.Models.EventSurvey>
+
+@{
+    ViewBag.Title = "ReviewIndex";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+<center>
+<h2>Attendee Reviews</h2>
+    <hr style="width:50%" />
+</center>
+<br/>
+<br />
+
+
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgray">
+                <div class="row">
+                    <img src="~/Content/img/xp.gif" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px"> Review.</h4>
+
+                    <div class="button" style="padding-inline-start:600px">
+                        <a class="btn btn-outline-info" href="@Url.Action("Review","Events", new {id = item.SurveyId})">View </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">            
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+<br />
+
+
+
+
+
+@section scripts{}

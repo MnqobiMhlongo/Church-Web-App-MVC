@@ -1,0 +1,111 @@
+﻿@model ChurchSystem.Models.Books
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+
+    <img src="~/Content/img/book.gif" width="250" height="250" />
+    @using (Html.BeginForm("Create", "Books", FormMethod.Post, new { enctype = "multipart/form-data", @class = "vehicle-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>New Book</h4>
+            <hr style="width:50%" />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Genre, new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Select", Value = "Select" },
+                        new SelectListItem { Text = "Bibles & Biblical Studies", Value = "Bibles & Biblical Studies" },
+                        new SelectListItem { Text = "Christian Living & Spiritual Growth", Value = "Christian Living & Spiritual Growth" },
+                        new SelectListItem { Text = "Christian Fiction", Value = "Christian Fiction" },
+                        new SelectListItem { Text = "Family & Relationships", Value = "Family & Relationships" },
+                        new SelectListItem { Text = "Christian Education & Ministrys", Value = "Christian Education & Ministry" },
+                        new SelectListItem { Text = "Children’s Christian Books", Value = "Children’s Christian Books" },
+                        new SelectListItem { Text = "Worship & Music", Value = "Worship & Music" },
+                    }, "Value", "Text"),
+                    new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.published, "Date Published", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.published, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.published, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.published, "Upload Cover", htmlAttributes: new { @class = "control-label col-md-2" }) <br />
+                <input type="file" name="ImageFile" id="ImageFile" />
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Add Book" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to Library", "Index")
+    </div>
+</center>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+<script>
+    $(function () {
+        var today = new Date(); // Get today's date
+        var maxDate = new Date();
+        maxDate.setDate(today.getDate() + 10); // Set max date to 10 days from today
+
+        $("#published").datepicker({
+            minDate: today, // Allow selection starting from today
+            maxDate: maxDate// Limit selection to 10 days from today
+        });
+    });
+</script>
+@section scripts{}

@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "ChatBot";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <img src="~/img/chatbot.gif" width="200" height="200" />
+    <h2>Bible Study Chat-Bot</h2>
+    <hr style="width:50%" />
+</center>
+<div class="container">
+    <input type="hidden" id="displayname" />
+    <ul id="discussion"></ul>
+
+    <div id="loading" style="display:none;">
+
+        <img src="~/img/499.gif" style="margin-right:1px">
+    </div>
+    <center>
+        <br />
+
+        <input type="text" id="message" placeholder="How can I help?"/>
+        <input type="button" id="sendmessage" value="Send" />
+    </center>
+</div>
+
+@section scripts {
+    <!-- Script references -->
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        $(function () {
+            var chat = $.connection.chatHub;
+            var username =  '@ViewBag.name';
+
+            // Function to display messages
+            chat.client.addNewMessageToPage = function (name, message) {
+                var alignClass = name === username ? 'my-message' : 'other-message';
+
+                if (name == username) {
+                    $('#loading').show()
+                }
+                else { $('#loading').hide(); }
+                // Hide loading indicator when a response is received
+
+                $('#discussion').append('<li class="' + alignClass + '"><strong>' + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + '</li>');
+            };
+
+            /*username = prompt('Enter your name:', '');*/
+            $('#displayname').val(username);
+
+            $('#message').focus();
+
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    $('#loading').show(); // Show loading indicator when message is sent
+
+                    chat.server.send($('#displayname').val(), $('#message').val());
+
+                    $('#message').val('').focus();
+                });
+            });
+        });
+
+        function htmlEncode(value) {
+            return $('<div />').text(value).html();
+        }
+    </script>
+}
+
+<style>
+    #discussion {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        #discussion li {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            max-width: 60%;
+        }
+
+    .my-message {
+        background-color: #d1e7dd;
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .other-message {
+        background-color: #d7f8f5;
+        text-align: right;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    /* Loading indicator styling */
+    #loading {
+        margin-top: 10px;
+        text-align: center;
+        color: #888;
+    }
+    /* Adjust the input field */
+    #message {
+        width: 100%; /* Increase the width */
+        height: 60px; /* Increase the height */
+        padding: 10px; /* Add padding for better appearance */
+        font-size: 18px; /* Increase font size */
+        border-radius: 5px; /* Add slight rounding of corners */
+        border: 1px solid #ccc; /* Add a border */
+    }
+
+    /* Adjust the button */
+    #sendmessage {
+        width: 10%; /* Increase the width */
+        height: 60px; /* Increase the height */
+        padding: 5px; /* Add padding for better appearance */
+        /* Increase font size */
+        border-radius: 5px; /* Add slight rounding of corners */
+        background-color: #686D76; /* Change background color */
+        color: white; /* Change text color to white */
+        border: none; /* Remove default border */
+        cursor: pointer; /* Change cursor to pointer on hover */
+    }
+</style>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

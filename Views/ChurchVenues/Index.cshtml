@@ -1,0 +1,116 @@
+﻿@model IEnumerable<ChurchSystem.Models.ChurchVenue>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Church Venues</h2>
+
+<!-----<p>
+    @Html.ActionLink("Create New", "Create")
+</p>-->
+<!-----
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VenueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VenueDescription)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.VenueCapacity)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueDescription)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueCapacity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.VenueId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.VenueId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.VenueId })
+            </td>
+        </tr>
+    }
+
+</table>
+    ---->
+
+
+<center>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="@Url.Action("Details", new { id = item.VenueId })">
+                        <!-- Image Slider -->
+                        <div id="carousel-@item.VenueId" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @if (item.VenueImages != null && item.VenueImages.Any())
+                                {
+                                    int i = 0;
+                                    foreach (var image in item.VenueImages)
+                                    {
+                                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                                            <img src="data:image/png;base64,@(image.ImageUrl)" class="d-block w-100" alt="@image.ImageUrl">
+                                        </div>
+                                        i++;
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="carousel-item active">
+                                        <img src="~/Content/Images/placeholder.png" class="d-block w-100" alt="No Image Available">
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="carousel-control-prev" href="#carousel-@item.VenueId" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-@item.VenueId" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <h5 class="card-title">@item.VenueName</h5>
+                            <p class="card-text">
+                                <strong>Description:</strong> @item.VenueDescription<br />
+                                <strong>Estimated Capacity:</strong> @item.VenueCapacity<br />
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</center>
+
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+}
+

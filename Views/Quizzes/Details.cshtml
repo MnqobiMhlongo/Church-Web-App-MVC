@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2></h2>
+
+
+<br/>
+<br/>
+<center>
+    <div class="card border-success mb-3" style="max-width: 20rem;">
+        <div class="card-header">Quiz Details</div>
+        <div class="card-body">
+            <h4 class="card-title">@ViewBag.T</h4>
+            <p class="card-text">Total Questions: @ViewBag.QC</p>
+            <p class="card-text">Date Created: @ViewBag.Date.ToString("d MMMM yyyy")</p>
+            <hr />
+
+            <a href="@Url.Action("Take","Quizzes", new {id = ViewBag.Id})">
+            <button type="button"  class="btn btn-success">Start Quiz</button>
+            </a>
+        </div>
+    </div>
+</center>
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+@section scripts{
+
+
+
+
+}

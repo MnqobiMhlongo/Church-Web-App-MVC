@@ -1,0 +1,65 @@
+﻿@model List<ChurchSystem.Models.Order>
+@{
+    ViewBag.Title = "Order History";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+
+<br/>
+<br />
+<br />
+<br />
+<br />
+
+<br />
+<h2>Your Order History</h2>
+
+@if (Model.Count == 0)
+{
+    <p>You have no orders yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.OrderDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@order.TotalAmount.ToString("C")</td>
+                    <td>@order.OrderStatus</td>
+                    <td>
+                        @Html.ActionLink("View Details", "Details", new { id = order.OrderId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<br/>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+@section scripts{
+    
+    
+    
+}

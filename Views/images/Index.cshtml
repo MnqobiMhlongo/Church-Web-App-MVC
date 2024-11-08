@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ChurchSystem.Models.images>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <h2> Stuednts Scanned Before Session </h2>
+
+    <hr style="width:50%"/>
+</center>
+
+<!------
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.imagedata)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.imagedata)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Imageid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Imageid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Imageid })
+        </td>
+    </tr>
+}
+
+</table>
+    -->
+<!-----  @foreach (var image in Model)
+{
+
+    <img src="data:image/png;base64,@image.imagedata" alt="Image from database" />
+}
+    -->
+
+<center>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="data:image/png;base64,@(item.imagedata)" alt="Church Leader Image" class="card-img-top">
+                    <div class="card-body">
+                        <p>@item.name</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</center>
+
+<br />
+<br />
+<br />
+
+<br />
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@section scripts{
+
+
+
+} 

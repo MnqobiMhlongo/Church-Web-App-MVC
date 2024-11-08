@@ -1,0 +1,184 @@
+﻿@model ChurchSystem.Models.EventSurvey
+@{
+    ViewBag.Title = "SubmitSurvey";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .content-wrapper {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+        }
+
+    .btn-end-event {
+        display: block;
+        width: 150px;
+        margin: 20px auto;
+        padding: 10px 20px;
+        text-align: center;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+        .btn-end-event:hover {
+            background-color: #45a049;
+        }
+</style>
+
+
+<div class="content-wrapper">
+    <center>
+        @using (Html.BeginForm("SubmitSurvey", "Events", FormMethod.Post))
+        {
+            <div>
+                <h3>How would you rate the content quality?</h3>
+                @foreach (var option in new[] { "Excellent", "Good", "Average", "Needs Improvement" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.ContentReview, option) @option
+                    </label>
+                }
+            </div>
+            <br />
+            <div>
+                <h3>How suitable was the venue for the event?</h3>
+                @foreach (var option in new[] { "Perfect", "Good", "Adequate", "Unsuitable" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.VenueReview, option) @option
+                    </label>
+                }
+            </div><br />
+
+            <input type="hidden" value="15" id="EventId" name="EventId" />
+
+            <div>
+                <h3>How would you rate the presenters' performance?</h3>
+                @foreach (var option in new[] { "Engaging", "Clear", "Average", "Needs Improvement" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.PresentersReview, option) @option
+                    </label>
+                }
+            </div><br />
+
+            <div>
+                <h3>Was the event location convenient for you?</h3>
+                @foreach (var option in new[] { "Very Convenient", "Convenient", "Neutral", "Inconvenient" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.LocationReview, option) @option
+                    </label>
+                }
+            </div>
+            <br />
+            <div>
+                <h3>How satisfied are you with the overall experience?</h3>
+                @foreach (var option in new[] { "Very Satisfied", "Satisfied", "Neutral", "Dissatisfied" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.SatisfactionReview, option) @option
+                    </label>
+                }
+            </div>
+            <br />
+            <div>
+                <h3>Would you recommend this event to others?</h3>
+                @foreach (var option in new[] { "Definitely", "Maybe", "No" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.Recommend, option) @option
+                    </label>
+                }
+            </div><br />
+
+            <div>
+                <h3>Would you attend this event again?</h3>
+                @foreach (var option in new[] { "Yes", "No" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.AttendAgain, option) @option
+                    </label>
+                }
+            </div>
+            <br />
+            <div>
+                <h3>Was the event length and schedule appropriate?</h3>
+                @foreach (var option in new[] { "Too Long", "Perfect", "Too Short" })
+                {
+                    <label>
+                        @Html.RadioButtonFor(m => m.LengthAndSchedule, option) @option
+                    </label>
+                }
+            </div>
+            <br />
+            <div>
+                <h3>Additional Comments</h3>
+                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", rows = 4 })
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Submit Survey</button>
+            <p class="text-warning">All reviews are submitted anonymously</p>
+        }
+    </center>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    @section scripts{}

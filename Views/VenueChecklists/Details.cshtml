@@ -1,0 +1,75 @@
+﻿@model ChurchSystem.Models.VenueChecklist
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VenueChecklist</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChurchVenue.VenueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cleaned)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cleaned)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoundEquipemnt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoundEquipemnt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Chairs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Chairs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lights)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lights)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tents)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SafetyEquipment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SafetyEquipment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

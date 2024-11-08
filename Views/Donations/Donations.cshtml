@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Donations";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+@{
+    var donationFunds = ViewBag.DonationFunds;
+}
+
+
+@*Busta929Mmapula*@
+
+<style>
+    .card {
+        margin: 10px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-title {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        font-size: 1.2em;
+    }
+</style>
+
+
+<br />
+
+<center>
+    <h2>Donation Funds</h2>
+    <hr />
+
+
+
+    <div class="container">
+        <div class="row">
+            @foreach (var fund in donationFunds)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@fund.Item1</h5>
+                            <p class="card-text">Donation Total: R @fund.Item2</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total</h5>
+                        <p class="card-text">Total: R @ViewBag.DonationTotal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</center>
+<br />
+<br />
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Messages</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var message in ViewBag.Messages)
+        {
+            <tr>
+                <td><img src="~/Content/img/money-transaction.png" width="25" height="25" />   @message.Item3 >>>  <a href="@Url.Action("Details", "Donations", new { id = message.Item1 })">@message.Item2</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<br />
+
+<br />
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+@section scripts{
+
+
+}

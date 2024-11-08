@@ -1,0 +1,186 @@
+﻿@model ChurchSystem.Models.EventSurvey
+
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .content-wrapper {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+        }
+
+    .btn-end-event {
+        display: block;
+        width: 150px;
+        margin: 20px auto;
+        padding: 10px 20px;
+        text-align: center;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+        .btn-end-event:hover {
+            background-color: #45a049;
+        }
+</style>
+
+
+
+
+
+
+<h2>Review</h2>
+
+
+
+<div class="content-wrapper">
+    <center>
+
+        <h5>How would you rate the content quality?</h5>
+        @ViewBag.CR
+        <h5>How suitable was the venue for the event?</h5>
+        @ViewBag.VR
+        <h5>How would you rate the presenters' performance?</h5>
+        @ViewBag.PR
+        <h5>Was the event location convenient for you?</h5>
+        @ViewBag.LR
+        <h5>How satisfied are you with the overall experience?</h5>
+        @ViewBag.SR
+        <h5>Would you recommend this event to others?</h5>
+        @ViewBag.R
+        <h5>Would you attend this event again?</h5>
+        @ViewBag.AA
+        <h5>Was the event length and schedule appropriate?</h5>
+        @ViewBag.LS
+        <h5>Additional Comments</h5>
+        @ViewBag.C
+    </center>
+</div>
+@*
+        <div>
+            <h4>EventSurvey</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.EventId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EventId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ContentReview)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ContentReview)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.VenueReview)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.VenueReview)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PresentersReview)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PresentersReview)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LocationReview)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LocationReview)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SatisfactionReview)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SatisfactionReview)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Recommend)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Recommend)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AttendAgain)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AttendAgain)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LengthAndSchedule)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LengthAndSchedule)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Comment)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Comment)
+                </dd>
+
+            </dl>
+        </div>*@
+        <p>       
+            @Html.ActionLink("Back to List", "ReviewIndex")
+        </p>
+
+@section scripts{}

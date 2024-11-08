@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ChurchSystem.Models.ChurchVenueBooking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChurchVenue.VenueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Decor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventType)
+        </th>
+        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChurchVenue.VenueName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Decor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventType)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BookingId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BookingId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+
+}
+
+<script>
+    @section scripts{
+
+
+    }
+</script>

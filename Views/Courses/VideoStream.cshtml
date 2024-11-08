@@ -1,0 +1,24 @@
+﻿@model ChurchSystem.Models.CourseMaterial
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Video Stream: @Model.Name</title>
+    <center> <h2>@Model.Name</h2></center>
+</head>
+<body>
+    <center>
+        <div>
+            <video width="800" height="400" autoplay muted controls>
+                <source src="@Model.FileUrl" type="video/mp4" />
+            </video>
+        </div>
+    </center>
+</body>
+</html>

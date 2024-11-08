@@ -1,0 +1,156 @@
+﻿@model ChurchSystem.Models.Events
+
+@{
+    ViewBag.Title = "Rate Event";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<br />
+
+<style>
+    .star-rating i {
+        font-size: 30px;
+        color: #ccc;
+        transition: color 0.3s;
+        cursor: pointer;
+    }
+
+        .star-rating i.selected,
+        .star-rating i:hover {
+            color: gold;
+        }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<br />
+<h2>Rate Event</h2>
+<br />
+<hr />
+<br />
+<center>
+    <div>
+        <h4>Event Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Title</dt>
+            <dd>@Model.Title</dd>
+
+            <dt>Description</dt>
+            <dd>@Model.Description</dd>
+
+            <dt>Date and Time</dt>
+            <dd>@Model.dateTime.ToString("f")</dd>
+
+            <dt>Location</dt>
+            <dd>@Model.Location</dd>
+
+            <dt>Organizer</dt>
+            <dd>@Model.Organizer</dd>
+
+            <dt>Status</dt>
+            <dd>@Model.Status</dd>
+        </dl>
+    </div>
+
+    <div>
+        <h4>Leave a Rating</h4>
+        @using (Html.BeginForm("Rating", "Events", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label for="Rating">Rate this event (1 to 5):</label>
+                <div class="star-rating" id="RatingStars">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="fas fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="Rating" name="Rating" value="0" />
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comments, "Comments")
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", rows = "5" })
+            </div>
+
+          <a href="#" id="submitRating" class="btn btn-primary">Submit Rating</a>
+
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+        }
+    </div>
+</center>
+
+@section scripts {
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const stars = document.querySelectorAll(".star-rating i");
+            const ratingInput = document.getElementById("Rating");
+
+            stars.forEach(star => {
+                star.addEventListener("mouseover", function () {
+                    const rating = parseInt(this.getAttribute("data-rating"));
+                    highlightStars(rating);
+                });
+
+                star.addEventListener("click", function () {
+                    const rating = parseInt(this.getAttribute("data-rating"));
+                    ratingInput.value = rating;
+                    highlightStars(rating);
+                });
+
+                star.addEventListener("mouseout", function () {
+                    const selectedRating = parseInt(ratingInput.value);
+                    highlightStars(selectedRating);
+                });
+            });
+
+            function highlightStars(rating) {
+                stars.forEach(star => {
+                    const starRating = parseInt(star.getAttribute("data-rating"));
+                    star.classList.toggle("selected", starRating <= rating);
+                });
+            }
+
+            document.getElementById("submitRating").addEventListener("click", function (e) {
+                e.preventDefault();
+                submitRating();
+            });
+
+            function submitRating() {
+                const rating = ratingInput.value;
+                const comments = document.querySelector("[name='Comments']").value;
+                const eventId = @Model.EventId;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("rate", "Events")",
+                    data: {
+                        eventId: eventId,
+                        rating: rating,
+                        comment: comments,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        window.location.href = "@Url.Action("HRC", "Home", new { successMessage = "FeedBack Submitted ;)" })";
+                    },
+                    error: function () {
+                        alert("There was an error submitting your rating. Please try again.");
+                    }
+                });
+            }
+        });
+</script>
+}

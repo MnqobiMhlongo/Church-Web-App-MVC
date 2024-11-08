@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "students";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<style>
+    .card {
+        height: 100%;
+        margin-bottom: 15px; /* Add margin to create space between cards */
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .add-card {
+        border: 2px dashed #ccc; /* Example styling for the "Add Vehicle" card */
+        text-align: center;
+        padding: 20px;
+    }
+
+    .background-image {
+        margin: 0;
+        padding: 0;
+        background-image: url('@ViewBag.BackgroundImageUrl');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+<center>
+    <h2>Students</h2>
+    <hr style="width:50%" />
+</center>
+<br />
+<br />
+@foreach (var student in ViewBag.Students)
+{
+    <div class="col-md-4">
+        <div class="card" style="background-color:lightgray">
+            <center>
+                <br />
+                <a href="@Url.Action("userReport", new { username = student })">
+                    <img src="~/Content/img/person.png" width="50" height="50" />
+                    <div class="card-body">
+                        <h5 class="card-title">@student</h5>
+                        <p class="card-text">
+                        </p>
+                    </div>
+                </a>
+            </center>
+        </div>
+    </div>
+    <!-- Display student's name, or adjust based on your user properties -->
+}
+
+
+@section scripts{}

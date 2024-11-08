@@ -1,0 +1,75 @@
+﻿@model ChurchSystem.Models.Quiz
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+@{
+    var num = 1;
+}
+
+<br />
+<br />
+ 
+
+
+<h2>@Model.Title</h2>
+
+<br />
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    foreach (var question in Model.Questions)
+    {
+        <div>
+            <h4></h4>
+
+        </div>
+
+        <center>
+            <div class="col-md-10">
+                <div class="card border-success mb-9" style="max-width: 90rem;">
+                    <div class="card-header"> Question: @num @{ num++; }</div>
+                    <div class="card-body">
+                        <h4 class="card-title">@question.Text</h4>
+                        @foreach (var answer in question.ShuffledAnswers)
+                        {
+                            <label>
+                                @Html.RadioButton("answers_" + question.Id, answer) @answer
+                            </label>
+                            <br />
+                        }
+                    </div>
+                </div>
+            </div>
+        </center>
+
+        <br />
+        <br />
+        <br />
+
+    }
+    <center>
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </center>
+
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+@section scripts{
+
+
+
+
+}

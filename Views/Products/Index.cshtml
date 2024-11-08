@@ -1,0 +1,121 @@
+﻿@model IEnumerable<ChurchSystem.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<style>
+    /* Add this CSS in your stylesheet or in a <style> tag in your view */
+    .floating-action-button {
+        position: fixed;
+        bottom: 20px;
+        left: 200px;
+        background-color: #007bff; /* Background color of the button */
+        border: none;
+        border-radius: 50%; /* Make it a circle */
+        padding: 10px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Add a shadow for effect */
+        z-index: 999; /* Ensure it's above other content */
+    }
+
+        .floating-action-button a {
+            text-decoration: none;
+            color: white; /* Text color of the button */
+            display: block;
+            text-align: center;
+        }
+
+</style>
+
+
+<br />
+<br />
+<br />
+<center>
+    <h2>Items For sale</h2>
+    <br />
+
+    <!------
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.productDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.productDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice)
+            </td>
+            <td>
+                @Html.ActionLink("Add to Cart", "AddToCart", "Basket", new { productId = item.productId, quantity = 1 }, null)
+                @Html.ActionLink("Edit", "Edit", new { id = item.productId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.productId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.productId })
+            </td>
+        </tr>
+    }</table>
+        --->
+
+
+
+    <div class="row">
+        @foreach (var vehicle in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+
+                    <img src="data:image/png;base64,@(vehicle.ImageUrl)" class="card-img-top" alt="Vehicle Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@vehicle.productDescription</h5>
+                        <p class="card-text">
+                            <strong>Price:</strong> R @vehicle.ProductPrice<br />
+
+                            <a href="@Url.Action("AddToCart", "Basket" ,new { productId = vehicle.productId, quantity = 1 }, null)" class="elements">
+                                <img src="~/Content/themes/base/images/add-cart.png" width="40" height="40" />
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="col-lg-2 col-12">
+        <div class="get-quote">
+            <div style="position: fixed; bottom: 20px; left: 20px;">
+                <a href="@Url.Action("Index", "Basket")" class="btn">
+                    CART
+                </a>
+            </div>
+          </div>
+    </div>
+
+
+</center>
+
+
+<br/>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+@section scripts{
+    
+    }

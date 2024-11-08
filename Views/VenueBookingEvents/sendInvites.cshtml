@@ -1,0 +1,71 @@
+﻿@model ChurchSystem.Models.SendInvites
+
+@{
+    ViewBag.Title = "sendInvites";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h2>Send Invites</h2>
+
+
+@using (Html.BeginForm("SendInvites", "VenueBookingEvents", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Phone Numbers</label>
+        <div id="phoneNumbersContainer">
+            <!-- Render the first phone number input box -->
+            <div class="input-group mb-3">
+                <input type="text" name="PhoneNumbers" class="form-control" placeholder="Enter phone number" required />
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-danger removePhoneNumber" style="display:none;">Remove</button>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="addPhoneNumber" class="btn btn-secondary">Add Another Number</button>
+        @Html.ValidationMessageFor(m => m.PhoneNumbers)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Message)
+        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", placeholder = "Enter your invitation message" })
+        @Html.ValidationMessageFor(m => m.Message)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send Invites</button>
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+
+
+<br/>
+<br />
+<br />
+<br />
+<br />
+
+@section Scripts {
+    <script>$(document).ready(function () {
+            // Add new phone number input
+            $('#addPhoneNumber').click(function () {
+                var newPhoneInput = `
+                <div class="input-group mb-3">
+                    <input type="text" name="PhoneNumbers" class="form-control" placeholder="Enter phone number" required />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removePhoneNumber">Remove</button>
+                    </div>
+                </div>`;
+                $('#phoneNumbersContainer').append(newPhoneInput);
+            });
+
+            // Remove phone number input
+            $(document).on('click', '.removePhoneNumber', function () {
+                $(this).closest('.input-group').remove();
+            });
+        });</script>
+}

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "StudyGroupChat";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <img src="~/Content/img/chat.gif" width="200" height="200" />
+    <h2>Study Group Chat: @ViewBag.nm</h2>
+    <hr style="width:50%" />
+</center>
+
+
+<center>
+    <div class="container">
+
+        <input type="hidden" id="displayname" value="@ViewBag.Name" />
+        <ul id="discussion"></ul>
+
+        <center>
+            <input type="text" id="message" placeholder="Enter your message" />
+            <input type="button" id="sendmessage" value="Send" />
+        </center>
+    </div>
+</center>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        $(function () {
+            var chat = $.connection.chatHub;
+            var username = '@ViewBag.name';
+            var groupName = "Group1";  // Define your group name here
+
+            // Function to add message to the chat
+            chat.client.addNewMessageToPage = function (name, message) {
+                var alignClass = name === username ? 'my-message' : 'other-message';
+                $('#discussion').append('<li class="' + alignClass + '"><strong>' + htmlEncode(name) + '</strong>: ' + htmlEncode(message) + '</li>');
+            };
+
+            // Join the group when SignalR connection starts
+            $.connection.hub.start().done(function () {
+                chat.server.joinGroup(groupName);
+
+                $('#sendmessage').click(function () {
+                    var message = $('#message').val();
+                    chat.server.sendToGroup(groupName, username, message);
+                    $('#message').val('').focus();
+                });
+            });
+        });
+
+        function htmlEncode(value) {
+            return $('<div />').text(value).html();
+        }
+    </script>
+}
+
+<style>
+    #discussion {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        #discussion li {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            max-width: 60%;
+        }
+
+    .my-message {
+        background-color: #d1e7dd;
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .other-message {
+        background-color: #d7f8f5;
+        text-align: right;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    /* Loading indicator styling */
+    #loading {
+        margin-top: 10px;
+        text-align: center;
+        color: #888;
+    }
+    /* Adjust the input field */
+    #message {
+        width: 100%; /* Increase the width */
+        height: 60px; /* Increase the height */
+        padding: 10px; /* Add padding for better appearance */
+        font-size: 18px; /* Increase font size */
+        border-radius: 5px; /* Add slight rounding of corners */
+        border: 1px solid #ccc; /* Add a border */
+    }
+
+    /* Adjust the button */
+    #sendmessage {
+        width: 10%; /* Increase the width */
+        height: 60px; /* Increase the height */
+        padding: 5px; /* Add padding for better appearance */
+        /* Increase font size */
+        border-radius: 5px; /* Add slight rounding of corners */
+        background-color: #686D76; /* Change background color */
+        color: white; /* Change text color to white */
+        border: none; /* Remove default border */
+        cursor: pointer; /* Change cursor to pointer on hover */
+    }
+</style>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

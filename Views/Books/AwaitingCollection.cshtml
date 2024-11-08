@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "AwaitingCollection";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+@model IEnumerable<ChurchSystem.Models.BookLoan>
+
+
+
+<center>
+    <img src="~/Content/img/books.gif" width="200" height="200" />
+    <h2>Awaiting Collection</h2>
+    <hr style="width:50%" />
+</center>
+<br />
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:lightgray">
+                Date: [ @item.reservedate.ToString("d MMMM yyyy") ] <br />
+                <hr />
+                <div class="row">
+                    <img src="data:image/png;base64,@(item.Books.imageurl)" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">@item.Books.Title</h4>
+
+                    <div class="button" style="padding-inline-start:600px">
+                        <a class="btn btn-outline-info" href="@Url.Action("ReservationDetails", new {id = item.bookloanId})">Details</a>
+                        <a class="btn btn-outline-success" href="javascript:void(0)" onclick="openSignatureModal(@item.bookloanId)">Sign For Collection</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <strong> To: @item.username</strong>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<!-- Modal -->
+<<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signatureModalLabel">Sign for Collection</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <canvas id="signatureCanvas" width="400" height="200" style="border: 1px solid black;"></canvas>
+                <br />
+                <button id="clearSignature" class="btn btn-danger">Clear</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSignature">Save Signature</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+<!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+<!-- Toastr JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script>
+    // Define the showSuccessMessage function
+    function showSuccessMessage(message) {
+        toastr.success(message);
+    }
+
+    // Handle the Toastr notification.
+    $(document).ready(function () {
+        // Check if a success message exists in the query string (added after redirection).
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("successMessage")) {
+            var successMessage = urlParams.get("successMessage");
+            showSuccessMessage(successMessage);
+        }
+    });
+</script>
+<script>
+  let signaturePad;
+  let canvas = document.getElementById('signatureCanvas');
+
+  // Initialize Signature Pad
+  signaturePad = new SignaturePad(canvas);
+
+  // Function to open the modal
+  function openSignatureModal(bookLoanId) {
+      $('#signatureModal').modal('show');
+      // Store bookLoanId in modal for later use
+      $('#signatureModal').data('bookLoanId', bookLoanId);
+  }
+
+  // Clear the signature pad
+  document.getElementById('clearSignature').addEventListener('click', function () {
+      signaturePad.clear();
+  });
+
+  // Save signature and send it to the controller
+  document.getElementById('saveSignature').addEventListener('click', function () {
+      if (signaturePad.isEmpty()) {
+          alert("Please provide a signature first.");
+      } else {
+          let bookLoanId = $('#signatureModal').data('bookLoanId');
+          let signatureData = signaturePad.toDataURL(); // This is the base64 string
+
+          // Post signature to controller
+         $.ajax({
+    url: '@Url.Action("SignCollect", "Books")',
+    type: 'POST',
+    data: {
+        bookLoanId: bookLoanId,
+        signature: signatureData // base64 string
+    },
+    success: function (response) {
+        // Redirect the user using the URL provided by the server
+        if (response.redirectUrl) {
+            window.location.href = response.redirectUrl;
+        }
+    },
+    error: function () {
+        alert("Error saving signature.");
+    }
+});
+      }
+  });
+</script>
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+
+
+}

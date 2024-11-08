@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ChurchSystem.Models.ChurchFunds>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+<style>
+    .card {
+        height: 100%;
+        margin-bottom: 15px; /* Add margin to create space between cards */
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .add-card {
+        border: 2px dashed #ccc; /* Example styling for the "Add Vehicle" card */
+        text-align: center;
+        padding: 20px;
+    }
+
+    .background-image {
+        margin: 0;
+        padding: 0;
+        background-image: url('@ViewBag.BackgroundImageUrl');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FundName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FundName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.FundId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FundId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FundId })
+            </td>
+        </tr>
+    }
+
+</table>
+

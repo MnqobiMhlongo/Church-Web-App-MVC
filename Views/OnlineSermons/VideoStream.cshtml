@@ -1,0 +1,58 @@
+﻿@model ChurchSystem.Models.OnlineSermons
+
+@{
+    ViewBag.Title = "VideoStream";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<br /><center>
+    <h2>Video Stream:</h2>
+    <h4>@Model.SermonTitle</h4>
+
+    <video width="500" height="390" autoplay muted controls>
+        <source src="@Model.FileUrl" type="video/mp4" />
+    </video>
+
+    <h3>Comments</h3>
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        <ul>
+            @foreach (var comment in Model.Comments)
+            {
+                <li>
+                    <strong>@comment.UserName</strong> - @comment.Timestamp
+                    <p>" @comment.Text "</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+
+    <!-- Add comment form -->
+    @using (Html.BeginForm("VideoAddComment", "OnlineSermons", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.SermonId)
+
+        <div>
+            @Html.LabelFor(model => model.Comments.FirstOrDefault().Text, "Enter your comment:")
+            @Html.TextAreaFor(model => model.Comments.FirstOrDefault().Text)
+        </div>
+        <button type="submit">Add Comment</button>
+    }
+</center>
+<br/>
+<br />
+<u>
+    <a href="@Url.Action("UserIndex","OnlineSermons")">Back</a>
+</u>
+<br /><br />
+
+@section scripts{
+    
+    
+    
+    
+}

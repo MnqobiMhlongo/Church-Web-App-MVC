@@ -1,0 +1,184 @@
+﻿<script src="https://www.rocksetta.com/tensorflowjs/saved-models/face-api-js/face-api.js"></script>
+@{
+    ViewBag.Title = "attendance";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<h3 align=center>
+    <a href="https://github.com/justadudewhohacks/face-api.js"></a>
+    <a href="https://www.rocksetta.com/tensorflowjs/"></a>
+
+    Scan Face to mark attendance
+</h3>
+<center>
+    <hr style="width:50%" />
+</center>
+<a href="https://github.com/hpssjellis/face-api.js-for-beginners"></a>
+<br>
+<div id="myDiv01">...</div>
+<br>
+
+
+<center>
+    <!----<div class="button btn-outline-primary"">
+            <input type="button" value=run onclick="{
+        run()
+    }">
+        </div>-->
+    <br />
+    <button onclick="{ run()}" class="btn btn-primary">Start</button>
+</center>
+
+<br>
+<br>
+<div>
+    <center>
+        <video onplay="onPlay(this)" id="inputVideo" autoplay muted width="640" height="480" style=" border: 1px solid #ddd;"></video>
+        <br>
+        <canvas id="overlay" width="640" height="480" style="position:relative; top:-487px; border: 1px solid #ddd;"></canvas>
+
+    </center>
+</div>
+
+
+<center>
+    <a href="@Url.Action("Index","images")" class="btn btn-outline-primary">View Bible Study Session Attendance</a>
+</center>
+
+
+<br/>
+<br/>
+
+@section scripts{
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        function resizeCanvasAndResults(dimensions, canvas, results) {
+            const { width, height } = dimensions instanceof HTMLVideoElement
+                ? faceapi.getMediaDimensions(dimensions)
+                : dimensions
+            canvas.width = width
+            canvas.height = height
+
+            return results.map(res => res.forSize(width, height))
+        }
+
+
+        function drawDetections(dimensions, canvas, detections) {
+            const resizedDetections = resizeCanvasAndResults(dimensions, canvas, detections)
+            faceapi.drawDetection(canvas, resizedDetections)
+        }
+
+
+        function drawLandmarks(dimensions, canvas, results, withBoxes = true) {
+            const resizedResults = resizeCanvasAndResults(dimensions, canvas, results)
+            if (withBoxes) {
+                faceapi.drawDetection(canvas, resizedResults.map(det => det.detection))
+            }
+            const faceLandmarks = resizedResults.map(det => det.landmarks)
+            const drawLandmarksOptions = { lineWidth: 2, drawLines: true, color: 'green' }
+            faceapi.drawLandmarks(canvas, faceLandmarks, drawLandmarksOptions)           
+            Command: toastr["success"]("Added To Register")
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-full-width",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+        }
+
+
+
+        //bryanstondrive
+        function captureAndSendImage(videoEl) {
+            const canvas = document.createElement('canvas');
+            canvas.width = videoEl.width;
+            canvas.height = videoEl.height;
+
+            // Draw the current video frame onto the canvas
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(videoEl, 0, 0, videoEl.width, videoEl.height);
+
+            // Convert the canvas to a Base64 string
+            const imageData = canvas.toDataURL('image/png');
+
+            // Send the image data to the server
+            sendImageToDatabase(imageData);
+        }
+        function sendImageToDatabase(imageData) {
+            const data = {
+                imagedata: imageData,
+                name: 'Captured Frame'
+            };
+
+            fetch('/Home/SaveImage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Image saved:', result);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+        ////////////////////////// The 2 Main functions ///////////////////////////////////////////
+
+        async function onPlay() {
+            const videoEl = document.getElementById('inputVideo')
+            const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.3 })
+
+
+            result = await faceapi.detectSingleFace(videoEl, options).withFaceLandmarks(true)
+            if (result) {
+                drawLandmarks(videoEl, document.getElementById('overlay'), [result], true)
+
+                // Just printing the first of 68 face landmark x and y
+                document.getElementById('myDiv01').innerHTML = 'First of 68 face landmarks, x: ' +
+                    Math.round(result._unshiftedLandmarks._positions[0]._x) + ', y: ' +
+                    Math.round(result._unshiftedLandmarks._positions[0]._y) + '<br>'
+
+                captureAndSendImage(videoEl);
+
+            }
+
+            setTimeout(() => onPlay(), 5000)
+        }
+
+        async function run() {
+            // await faceapi.loadTinyFaceDetectorModel('https://hpssjellis.github.io/face-api.js-for-beginners/')
+            // await faceapi.loadFaceLandmarkTinyModel('https://hpssjellis.github.io/face-api.js-for-beginners/')
+            await faceapi.loadTinyFaceDetectorModel('https://www.rocksetta.com/tensorflowjs/saved-models/face-api-js/')
+            await faceapi.loadFaceLandmarkTinyModel('https://www.rocksetta.com/tensorflowjs/saved-models/face-api-js/')
+
+            const stream = await navigator.mediaDevices.getUserMedia({ video: {} })
+            const videoEl = document.getElementById('inputVideo')
+            videoEl.srcObject = stream
+        }
+    </script>
+
+}
+
+

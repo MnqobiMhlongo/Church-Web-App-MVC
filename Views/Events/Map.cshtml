@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Map";
+}
+<br />
+<br />
+<br />
+<br />
+
+<h4>Directions To Church</h4>
+
+<hr />
+<div id="map" style="height: 650px;" align="right"></div>
+
+
+@section scripts{
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnGwJHs6PemEAUYj4p4uVd5UICh1OC2oY&libraries=places&callback=initMap"></script>
+    <script>
+        function initMap() {
+            // Get the map element
+            const mapElement = document.getElementById("map");
+
+            // Make sure the map element exists
+            if (!mapElement) {
+                console.error("Map element not found.");
+                return;
+            }
+
+            // Create a new map object
+            const map = new google.maps.Map(mapElement, {
+                center: { lat: -29.858680399999998, lng: 31.0218404 },
+                zoom: 13,
+            });
+
+            const customIcon = {
+                url: '/Content/themes/base/images/location.png', // URL to your custom icon image
+                scaledSize: new google.maps.Size(32, 32), // Size of the icon
+                origin: new google.maps.Point(0, 0), // Origin point of the icon (usually top-left)
+                anchor: new google.maps.Point(16, 32), // Anchor point of the icon (usually the center)
+            };
+
+            const marker = new google.maps.Marker({
+                position: { lat: -29.858680399999998, lng: 31.0218404 },
+                map: map, // Associates the marker with the map
+                title: "Church Location", // Optional title for the marker
+                icon: customIcon,
+            });
+
+
+            // Create a DirectionsService object
+            const directionsService = new google.maps.DirectionsService();
+
+            // Create a DirectionsRenderer object to display the route
+            const directionsRenderer = new google.maps.DirectionsRenderer({
+                map: map,
+            });
+
+            // Define the user's location (you should obtain this through geolocation)
+            // Check if geolocation is available in the user's browser
+            if ("geolocation" in navigator) {
+                // Use the Geolocation API to get the user's current position
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const userLocation = new google.maps.LatLng(
+                        position.coords.latitude,
+                        position.coords.longitude
+                    );
+
+                    // Now you can use the user's location for your DirectionsService request
+                    // Create a DirectionsService request as shown in the previous examples
+                    const directionsService = new google.maps.DirectionsService();
+                    const directionsRenderer = new google.maps.DirectionsRenderer({
+                        map: map,
+                        suppressMarkers: true,
+                    });
+
+                    const request = {
+                        origin: userLocation,
+                        destination: marker.getPosition(),
+                        travelMode: google.maps.TravelMode.DRIVING,
+                    };
+
+                    const userMarker = new google.maps.Marker({
+                        position: userLocation,
+                        map: map,
+                        title: "User's Address",
+                        icon: {
+                            url: '/Content/themes/base/images/ha.png', // Replace with the path to your custom user marker
+                            scaledSize: new google.maps.Size(32, 32), // Size of the icon
+                        }
+                    });
+
+                    directionsService.route(request, function (response, status) {
+                        if (status === google.maps.DirectionsStatus.OK) {
+                            directionsRenderer.setDirections(response);
+                        } else {
+                            console.error("Directions request failed with status: " + status);
+                        }
+                    });
+                });
+            } else {
+                console.error("Geolocation is not available in this browser.");
+            }
+
+
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+}
+
+

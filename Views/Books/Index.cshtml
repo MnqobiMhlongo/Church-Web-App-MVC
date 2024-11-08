@@ -1,0 +1,212 @@
+﻿@model IEnumerable<ChurchSystem.Models.Books>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+    var genres = new List<string> {
+        "Worship & Music",
+        "Christian Education & Ministrys",
+        "Children’s Christian Books",
+        "Family & Relationships",
+        "Christian Fiction",
+        "Christian Living & Spiritual Growth",
+        "Bibles & Biblical Studies"
+    };
+}
+
+<style>
+    .floating-action-button {
+        position: fixed;
+        bottom: 20px;
+        left: 200px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 50%;
+        padding: 10px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+        .floating-action-button a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            text-align: center;
+        }
+
+    /* Ensure all images are the same size */
+    .card-img-top {
+        width: 100%; /* Adjusts to the width of the card */
+        height: 250px; /* Fixed height */
+        object-fit: cover; /* Ensures the image fills the area and maintains aspect ratio */
+    }
+</style>
+
+<center>
+    <h2>All Books</h2>
+    <hr style="width:50%" />
+</center>
+<br />
+<br />
+
+<a href="@Url.Action("WishList","Books")" class="btn btn-outline-success"> My Wishlist</a>
+<br />
+<br />
+@foreach (var genre in genres)
+{
+    var booksInGenre = Model.Where(x => x.Genre == genre);
+
+    <h4>@genre</h4>
+    <hr style="width:65%" />
+    <br />
+    if (!booksInGenre.Any())
+    {
+        <strong>No books are available.</strong>
+        <br />
+        <br />
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var vehicle in booksInGenre)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="data:image/png;base64,@(vehicle.imageurl)" class="card-img-top" alt="Vehicle Image">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">@vehicle.Title</h5>
+                            </center>
+                            <p class="card-text">
+                                <center>
+                                    <strong>Genre:</strong>  @vehicle.Genre<br />
+                                    <strong>Date Published:</strong> @vehicle.published.ToString("dd MMMM yyyy")
+                                    <br />
+                                    <hr style="width:50%" />                                  
+                                        @*<a href="@Url.Action("Details", "Books", new { Id = vehicle.BookId }, null)" class="elements">
+                                                <div class="btn btn-primary">Available</div>
+                                            </a>*@
+                                        <button type="button" class="btn btn-primary"
+                                                data-toggle="bookDetailsModal"
+                                                onclick="setModalValues(
+                                                '@vehicle.BookId',
+                                                '@vehicle.Title',
+                                                'data:image/png;base64,@(vehicle.imageurl)',
+                                                '@vehicle.Description',
+                                                '@vehicle.Author',
+                                                '@vehicle.Genre',
+                                                '@vehicle.published.ToString("dd MMMM yyyy")',
+                                                '@vehicle.Status' 
+                                            )">
+                                            View Details
+                                        </button>                                
+                                </center>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    <br />
+}
+
+<br />
+<br />
+<br />
+<br />
+
+<!-- Modal Structure -->
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">Book Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="book-image" src="" class="img-fluid mb-3" alt="Book Image" />
+                <center>  <h4 id="book-title"></h4></center>
+                <p><strong>Author:</strong> <span id="book-author"></span></p>
+                <p><strong>Description:</strong> <span id="book-description"></span></p>
+                <p><strong>Genre:</strong> <span id="book-genre"></span></p>
+                <p><strong>Published on:</strong> <span id="book-published"></span></p>
+                <center>
+                    <hr style="width:50%" />
+                    <strong> <span id="book-status"></span></strong>
+                    <hr style="width:50%" />
+                </center>
+            </div>
+
+            <div class="modal-footer">
+                <a id="borrow-button" class="btn btn-outline-primary">Borrow</a>
+                <a id="wishlist-button" class="btn btn-outline-secondary" style="display:none;">Add to Wishlist</a>
+                <button type="button" onclick="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+    <script>
+        //forModal
+        function setModalValues(id, title, img, description, author, genre, published,status) {
+            // Set the student ID and status on the modal
+            // Set the modal fields with the passed data
+            $('#book-id').text(id);
+            $('#book-title').text(title);
+            $('#book-image').attr('src', img);
+            $('#book-description').text(description);
+            $('#book-author').text(author);
+            $('#book-genre').text(genre);
+            $('#book-published').text(published);
+            $('#book-status').text(status);
+            $('#borrow-button').attr('href', '@Url.Action("Details", "Books")' + '?id=' + id);
+                if (status === 'Available') {
+        $('#borrow-button').show();
+        $('#wishlist-button').hide();
+        $('#borrow-button').attr('href', '@Url.Action("Details", "Books")' + '?id=' + id);
+    } else {
+        $('#borrow-button').hide();
+        $('#wishlist-button').show();
+        $('#wishlist-button').attr('href', '@Url.Action("AddToWishList", "Books")' + '?id=' + id);
+    }
+
+            console.log(title);
+            // Show the modal
+            $('#bookModal').modal('show');
+        }
+
+
+        function closeModal() {
+            $('#bookModal').modal('hide');
+
+        }
+
+    </script>
+}

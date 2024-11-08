@@ -1,0 +1,133 @@
+﻿@model ChurchSystem.Models.BookLoan
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    Details
+    <hr style="width:50%" />
+</center>
+
+<div class="row">
+
+    <div class="col">
+        <center>
+            <div class=" card">
+                <div class="card-header">Cover</div>
+                <div class="card-body">
+                    <img src="data:image/png;base64,@(Model.Books.imageurl)" width="500" height="500" alt="Student Image">
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div class="col">
+        <center>
+            <div class=" card">
+                <div class="card-header">Details</div>
+                <div class="card-body">
+                    <b>Book Title:</b>  @Model.Books.Title<br />
+                    <b>Genre:</b>  @Model.Books.Genre<br />
+                    <b>Author:</b>  @Model.Books.Author<br />
+                    <b>Date Published:</b>  @Model.Books.published.ToString("dd MMMM yyyy")<br />
+                    <hr style="width:50%" />
+
+                    <p class="text-success">@Model.status</p>
+                    <hr style="width:50%" />
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="card">
+                <div class="card-header">Handover Signature</div>
+                <div class="card-body">
+                    @if (Model.signreturnImageUrl != null)
+                    {
+                        <img src="data:image/png;base64,@(Model.signreturnImageUrl)" width="100" height="100" alt="Student Image">
+                    }
+                    else if (Model.signoutImageUrl != null)
+                    {
+                        <img src="data:image/png;base64,@(Model.signoutImageUrl)" width="100" height="100" alt="Student Image">
+                    }
+                    else
+                    { <p>No Signature</p>}
+                </div>
+                <br />
+            </div>
+            <br />
+            <div class="card">
+                <div class="card-header">Loan Details</div>
+                <div class="card-body">
+                    <b>Return Date: </b>@Model.expectedReturn.ToString("dd MMMM yyyy")<br />
+                    <b>Late Fine: </b>R @Model.Bookfine,00
+                </div>
+            </div>
+            <div class="card-footer">
+                @if (Model.Bookfine > 0)
+                {
+                    <form id="PayFastForm" action="https://www.payfast.co.za/eng/process" method="POST">
+                        <input type="hidden" name="merchant_id" value="24377765">
+                        <input type="hidden" name="merchant_key" value="gsefp06ta504u">
+                        <input type="hidden" name="return_url" value="https://localhost:44386/Home/Index">
+                        <input type="hidden" name="cancel_url" value="https://localhost:44386/Home/About">
+                        <input type="hidden" name="notify_url" value="https://localhost:44386/Home/Contact">
+
+                        <input type="hidden" name="name_first" value="FirstName">
+                        <input type="hidden" name="name_last" value="LastName">
+                        <input type="hidden" name="email_address" value="@Model.username">
+                        <input type="hidden" name="cell_number" value="0634032279">
+
+                        <input type="hidden" name="amount" value="@Model.Bookfine">
+                        <input type="hidden" name="item_name" value="Andile">
+                        <input type="hidden" name="item_description" value="Mbatha">
+
+                        <input type="hidden" name="email_confirmation" value="1">
+                        <input type="hidden" name="confirmation_address" value="22112343@dut4life.ac.za">
+
+                        <div class="form-group">
+                            <button class="btn btn-outline-danger" type="submit">PAY FINE</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </center>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+@section scripts{
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Define the showSuccessMessage function
+        function showSuccessMessage(message) {
+            toastr.success(message);
+        }
+
+        // Handle the Toastr notification.
+        $(document).ready(function () {
+            // Check if a success message exists in the query string (added after redirection).
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("successMessage")) {
+                var successMessage = urlParams.get("successMessage");
+                showSuccessMessage(successMessage);
+            }
+        });
+    </script>
+}
+

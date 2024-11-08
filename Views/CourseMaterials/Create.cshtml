@@ -1,0 +1,85 @@
+﻿@model ChurchSystem.Models.CourseMaterial
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+
+    <img src="~/Content/img/file.png" width=" 230" height="230" />
+
+    <h2>New Bible Study Material</h2>
+
+    @using (Html.BeginForm("Create","CourseMaterials",FormMethod.Post, new { enctype = "multipart/form-data", @class = "vehicle-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr style="width:50%" />
+    <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="display:none">
+        @Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, "Title", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FileType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            @Html.DropDownListFor(m => m.FileType, new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Select", Value = "Select" },
+                new SelectListItem { Text = "PDF", Value = "PDF" },
+                new SelectListItem { Text = "AUDIO FILE", Value = "AUDIO FILE" },
+                new SelectListItem { Text = "VIDEO", Value = "VIDEO" }
+            }, "Value", "Text"),
+            new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.FileType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="file" name="ImageFile" id="ImageFile" />
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Upload" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</center>
+@section scripts{
+    
+    
+
+    
+} 

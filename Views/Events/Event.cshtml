@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ChurchSystem.Models.Events>
+
+@{
+    ViewBag.Title = "Event";
+    Layout = "~/Views/Shared/dLayout.cshtml";
+}
+
+<center>
+    <h2>Event History</h2>
+</center>
+<br/>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        
+        <th>
+           Date And Time
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Organizer)
+        </th>
+       
+        <th>
+            Average Rating
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.dateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Organizer)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating).00
+        </td>
+
+
+        <td>
+
+            <div class="col-lg-2 col-12">
+                <div class="get-quote">
+                    <a href="@Url.Action("Attendance", "Events", new { eventId = item.EventId })" class="btn btn-primary">View Attendance</a>
+                </div>
+            </div>
+            
+        </td>
+    </tr>
+}
+
+</table>
+
+
+
+@section scripts{
+    
+    
+    
+    
+    
+    
+    
+}
