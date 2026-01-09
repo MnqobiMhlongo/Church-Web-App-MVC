@@ -22,7 +22,7 @@ namespace ChurchSystem.Controllers
 
         public ActionResult BookLoanOverview()
         {
-            SendDueReminder();
+            //SendDueReminder();
             UpdateOverdueFines();
             RemoveExpiredReservations();
             var allBorrowedBooks = db.bookLoan
@@ -46,7 +46,7 @@ namespace ChurchSystem.Controllers
 
         public ActionResult AdminIndex()
         {          
-            SendDueReminder();
+            //SendDueReminder();
             UpdateOverdueFines();
             RemoveExpiredReservations();
             return View(db.books.ToList());
@@ -57,9 +57,9 @@ namespace ChurchSystem.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            SendDueReminder();
-            UpdateOverdueFines();
-            RemoveExpiredReservations();
+            //SendDueReminder();
+            //pdateOverdueFines();
+            //RemoveExpiredReservations();
             return View(db.books.ToList());
         }
 
@@ -153,7 +153,7 @@ namespace ChurchSystem.Controllers
             return View(books);
         }
 
-        public void SendDueReminder()
+        /*public void SendDueReminder()
         {
             DateTime td = DateTime.Today;
 
@@ -189,7 +189,7 @@ namespace ChurchSystem.Controllers
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
 
-               /* //smsNow
+               *//* //smsNow
                 string number = "0634032279";
                 string myURI = "https://api.bulksms.com/v1/messages";
                 string myUsername = "guardianangels2024";
@@ -220,9 +220,9 @@ namespace ChurchSystem.Controllers
                     Console.WriteLine("An error occurred:" + ex.Message);
                     var reader = new StreamReader(ex.Response.GetResponseStream());
                     Console.WriteLine("Error details:" + reader.ReadToEnd());
-                }*/
+                }*//*
             }
-        }
+        }*/
 
 
 

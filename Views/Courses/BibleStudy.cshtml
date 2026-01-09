@@ -28,7 +28,7 @@
 
 <center>
     
-    @if (ViewBag.comp != null)
+    @if (ViewBag.comp == true)
     {
         <img src="~/Content/img/medalt.gif" width="50" height="50" /><h2>Bible Study: @ViewBag.NM</h2>
 }
@@ -239,7 +239,7 @@ else
 <br />
 <br />
 
-      @if(ViewBag.comp != null)
+      @if(ViewBag.comp == true)
             {
                 <h4>Completion Certification</h4>
                 <hr style="width:60%" />
@@ -252,7 +252,7 @@ else
                   <img src="~/Content/img/medalt.gif" width="50" height="50" /> <h4 style="padding-top:9px; padding-left:9px">Completion Certificate</h4>
 
                   <div class="button" style="padding-inline-start:600px">      
-                      <a class="btn btn-outline-success" href="@Url.Content("~/Content/CompletionCertificate.pdf")">Download Certificate</a>
+                      <a class="btn btn-outline-success" href="@Url.Action("GenerateCertificate","Courses", new { username = ViewBag.student, coursename = ViewBag.NM })">Download Certificate</a>
                   </div>
               </div>
           </div>

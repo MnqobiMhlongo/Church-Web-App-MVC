@@ -196,6 +196,7 @@ namespace ChurchSystem.Controllers
                 StudentId = studentId,
                 QuizId = quiz.QuizID,
                 Score = score,
+                user = User.Identity.GetUserName(),
                 Passed = "true"
             };
 
@@ -286,8 +287,12 @@ namespace ChurchSystem.Controllers
         public ActionResult AttemptReview(int id)
         {
             var quizattempt = db.QuizAttempt.Where(a => a.StudentQuizResultId == id).ToList();
+            var CID = db.StudentQuizResult.Include("Quiz").Where(a => a.StudentQuizResultId == id).Select(a=>a.Quiz.CourseId).FirstOrDefault();
+
 
             ViewBag.QA = quizattempt;
+            ViewBag.CID = CID;
+
 
             return View();
         }

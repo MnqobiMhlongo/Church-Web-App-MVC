@@ -18,7 +18,7 @@ namespace ChurchSystem
             app.UseHangfireServer();
 
             // Schedule a recurring job
-            RecurringJob.AddOrUpdate(() => SendEventReminders(), Cron.Minutely);
+            //RecurringJob.AddOrUpdate(() => SendEventReminders(), Cron.Minutely);
 
             app.MapSignalR();
             ConfigureAuth(app);

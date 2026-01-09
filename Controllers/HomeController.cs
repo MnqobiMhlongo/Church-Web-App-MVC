@@ -214,9 +214,9 @@ namespace ChurchSystem.Controllers
             DateTime startTime = DateTime.Now;
             DateTime endTime = startTime.AddMinutes(2);
 
-            var upcomingEvents = db.Events
+        /*    var upcomingEvents = db.Events
                 .Where(e => e.dateTime > startTime && e.dateTime <= endTime)
-                .ToList();
+                .ToList();*/
 
 
             //SendSms("27634032279", $"Reminder: The event TESTING is starting soon!");

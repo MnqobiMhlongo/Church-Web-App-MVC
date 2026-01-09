@@ -85,5 +85,18 @@ namespace ChurchSystem
         }
 
 
+        //we shall overcome
+        public void SendSignal(string roomId, string signal, string user)
+        {
+            Clients.Group(roomId).ReceiveSignal(signal, user);
+        }
+
+        public void JoinRoom(string roomId)
+        {
+            Groups.Add(Context.ConnectionId, roomId);
+        }
+
+
+
     }
 }

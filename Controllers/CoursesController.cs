@@ -15,6 +15,14 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.AspNet.Identity;
 using PayPal.Api;
 using Microsoft.Ajax.Utilities;
+using ChurchSystem.Migrations;
+using System.Xml.Linq;
+using ZXing.OneD;
+using iText.Layout;
+using iText.Kernel.Pdf;
+using iText.Layout.Element;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
 
 namespace ChurchSystem.Controllers
 {
@@ -273,20 +281,37 @@ namespace ChurchSystem.Controllers
            db.SaveChanges();*/
 
             string student = User.Identity.GetUserName();
-            List<StudentQuizResult> allattempts = db.StudentQuizResult.Where(c=>c.user == student).ToList(); 
-            int allPassed = db.StudentQuizResult.Where(b => b.Passed == "true").Count();
+            List<StudentQuizResult> allattempts = db.StudentQuizResult.Include(sqr => sqr.Quiz).Where(c=>c.user == student).ToList(); 
+            int allPassed = db.StudentQuizResult.Where(b => b.Passed == "true" && b.user == student).Count();
+            List<StudentQuizResult> pass = db.StudentQuizResult.Where(b => b.Passed == "true" && b.user == student).ToList();
+            List<StudentQuizResult> passthis = db.StudentQuizResult.Include(sqr => sqr.Quiz).Where(b => b.Passed == "true" && b.Quiz.CourseId == id).ToList();
             int allQuizzes = db.Quizzes.Where(a => a.CourseId == id).Count();
             int passedattempts = 0;
 
-            foreach (var item in allattempts.Where(m=>m.Passed == "true"))
+            foreach (var item in allattempts.Where(m=>m.Passed == "true" && m.Quiz.CourseId == id))
             {
                 passedattempts++;
-            } 
+            }
 
-            if(id == 9)
+            /*bool hasPassedQuiz2 = db.StudentQuizResults
+                .Where(sqr => sqr.StudentId == userId && sqr.Quiz.CourseId == courseId && sqr.Passed == "Yes")
+                .Any();*/
+
+            /*bool hasPassedQuiz = db.StudentQuizResult
+                .Where(sqr => sqr.user == student && sqr.Quiz.CourseId == id && sqr.Passed == "true").Any();*/
+
+            bool hasPassedQuiz = db.StudentQuizResult.Include(sqr => sqr.Quiz)
+                .Where(sqr => sqr.user == student && sqr.Quiz.CourseId == id && sqr.Passed == "true").Any();
+
+            bool vb = hasPassedQuiz;
+
+
+            if(vb)
             {
                 ViewBag.comp = true;
             }
+
+
 
             var lvl = db.Courses.Where(x => x.CourseId == id).Select(x=>x.Level).FirstOrDefault();
             var AM = db.Announcements.Where(x => x.CourseId == id).ToList();
@@ -302,6 +327,7 @@ namespace ChurchSystem.Controllers
             ViewBag.NM = N; 
             ViewBag.qz = qz;  
             ViewBag.lvl = lvl;
+            ViewBag.student = student;
 
             return View();
         }
@@ -320,6 +346,43 @@ namespace ChurchSystem.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+       public ActionResult GenerateCertificate(string username, string coursename)
+        {
+
+            string templatePath = Server.MapPath("~/Content/CompletionCertificate.pdf");
+
+            string outputPath = Server.MapPath($"~/Content/{username}_Certificate.pdf");
+            //Lizzo - To Be Loved        
+            using (PdfReader pdfReader = new PdfReader(templatePath))
+            using (PdfWriter pdfWriter = new PdfWriter(outputPath))
+            {
+                PdfDocument pdfDoc = new PdfDocument(pdfReader, pdfWriter);
+                Document document = new Document(pdfDoc);
+
+                document.ShowTextAligned(new Paragraph(username)
+                        .SetFontSize(30)
+                        .SetUnderline(3, -3)
+                        .SetBold(),
+                    430,
+                    420,
+                    iText.Layout.Properties.TextAlignment.CENTER);
+                document.ShowTextAligned(new Paragraph(coursename)
+                       .SetFontSize(25)
+                        /*  .SetUnderline(3,-3)*/
+                        .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD)),
+                    430,
+                    285,
+                    iText.Layout.Properties.TextAlignment.CENTER);
+                document.Close();
+            }
+            return File(outputPath, "application/pdf", $"{username}_Certificate.pdf");
+        }
+
+
+
+
+
 
         protected override void Dispose(bool disposing)
         {

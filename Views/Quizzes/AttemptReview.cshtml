@@ -6,13 +6,13 @@
 
 
 
-    @{
-        var list = ViewBag.QA as List<ChurchSystem.Models.QuizAttempt>;
-        var countCorrect = list.Where(a => a.IsCorrect).Count();
-        var countTotal = list.Count();
-        var percentageScore = (countCorrect / (double)countTotal) * 100;
-        var passed = percentageScore >= 50; // Assuming 50% is the passing score
-    }
+@{
+    var list = ViewBag.QA as List<ChurchSystem.Models.QuizAttempt>;
+    var countCorrect = list.Where(a => a.IsCorrect).Count();
+    var countTotal = list.Count();
+    var percentageScore = (countCorrect / (double)countTotal) * 100;
+    var passed = percentageScore >= 50; // Assuming 50% is the passing score
+}
 
 
 <center>
@@ -43,9 +43,9 @@
     </div>
 </div>
 
-<br/>
-<br/>
-<br/>
+<br />
+<br />
+<br />
 
 
 @foreach (var item in list)
@@ -89,8 +89,19 @@
     </div>
 
 }
+<br />
+<br />
 
+<center>
+    <div class="button">
+        <a href="@Url.Action("BibleStudy", "Courses", new { id = ViewBag.CID})" class="btn">Back To Bible Study</a>
+    </div>
 
+</center>
+<br />
+<br />
+<br />
+<br />
 @section scripts{
 
 
